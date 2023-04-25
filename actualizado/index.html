@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="" />
+  <title>AvatarQR</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+  <script>
+    AFRAME.registerComponent('handle-click-social-network', {
+
+      init: function () {
+        this.redirectSocialNetwork = function (e) {
+          const socialNetwork = e.target.id;
+          switch (socialNetwork) {
+            case ('linkedin'):
+              window.open('https://www.linkedin.com');
+              break;
+            case ('facebook'):
+              window.open('https://www.facebook.com');
+              break;
+            case ('youtube'):
+              window.open('https://www.youtube.com');
+              break;
+            case ('discord'):
+              window.open('https://www.discord.com');
+              break;
+          }
+        }
+        this.el.addEventListener('click', this.redirectSocialNetwork);
+      },
+
+      remove: function () {
+        this.el.removeEventListener('click', this.redirectSocialNetwork);
+      }
+    })
+  </script>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <a-scene id="root" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false;">    
+    
+  </a-scene>
+  <script src="./index.js"></script>
+</body>
+
+</html>
