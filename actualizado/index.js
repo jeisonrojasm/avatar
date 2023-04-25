@@ -19,40 +19,38 @@ async function getData() {
         const response = await fetch('http://localhost:3001/');
         const data = await response.json();
 
+        const camera = document.createElement('a-camera');
+        camera.setAttribute('camera', '');
+        camera.setAttribute('raycaster', '');
+        camera.setAttribute('position', '0 0 0');
+        camera.setAttribute('fov', '45');
+        camera.setAttribute('look-controls-enabled', 'false');
+
+        root.insertAdjacentElement('afterbegin', camera);
+
         data.forEach(e => {
             const marker = createMarker(`marker${e.id}`, 'pattern', e.urlMarker);
             const entity = createEntity(`entity${e.id}`, e.urlModel);
 
             marker.appendChild(entity);
 
-            for (let i = 1; i < 5; i++) {
+            for (let i = 4; i > 0; i--) {
                 const img = createBoxImage(`boxImage${i}${e.id}`, boxImages[e[`socialNetwork${i}`]]);
                 marker.appendChild(img);
             }
 
-            for (let i = 1; i < 5; i++) {
-                const box = createBox(`box${i}`, boxPositions[`position${i}`], `boxImage${i}${e.id}`);
+            for (let i = 4; i > 0; i--) {
+                const box = createBox(e[`socialNetwork${i}`], boxPositions[`position${i}`], `boxImage${i}${e.id}`);
                 marker.appendChild(box);
             }
 
-            root.appendChild(marker);
+            root.insertAdjacentElement('afterbegin', marker);
         });
-
-        const camera = document.createElement('a-camera');
-        camera.setAttribute('camera');
-        camera.setAttribute('raycaster');
-        camera.setAttribute('position', '0 0 0');
-        camera.setAttribute('fov', '45');
-        camera.setAttribute('look-controls-enabled', 'false');
-
-        root.appendChild(camera);
 
     } catch (error) {
         console.log(error);
     }
 }
-
-getData();
 
 const createMarker = (markerId, markerType, markerURL) => {
     const marker = document.createElement('a-marker');
@@ -92,4 +90,8 @@ const createBox = (boxId, boxPosition, boxMaterial) => {
     box.setAttribute('handle-click-social-network', '');
     return box;
 }
+
+window.addEventListener('DOMContentLoaded', getData);
+// getData();
+
 
