@@ -1,4 +1,5 @@
 const root = document.getElementById('root');
+const scene = document.querySelector('a-scene');
 
 const boxPositions = {
     position1: '-0.6 1.8 0.0',
@@ -32,19 +33,22 @@ async function getData() {
             const marker = createMarker(`marker${e.id}`, 'pattern', e.urlMarker);
             const entity = createEntity(`entity${e.id}`, e.urlModel);
 
+
+
             marker.appendChild(entity);
 
-            for (let i = 4; i > 0; i--) {
-                const img = createBoxImage(`boxImage${i}${e.id}`, boxImages[e[`socialNetwork${i}`]]);
+            for (let i = 1; i < 5; i++) {
+                const img = createBoxImage(`boxImage${i}-entity${e.id}`, boxImages[e[`socialNetwork${i}`]]);
                 marker.appendChild(img);
             }
 
-            for (let i = 4; i > 0; i--) {
-                const box = createBox(e[`socialNetwork${i}`], boxPositions[`position${i}`], `boxImage${i}${e.id}`);
+            for (let i = 1; i < 5; i++) {
+                const box = createBox(e[`socialNetwork${i}`], `box${i}-entity${e.id}`, boxPositions[`position${i}`], `boxImage${i}-entity${e.id}`);
                 marker.appendChild(box);
             }
 
             root.insertAdjacentElement('afterbegin', marker);
+
         });
 
     } catch (error) {
@@ -58,6 +62,7 @@ const createMarker = (markerId, markerType, markerURL) => {
     marker.setAttribute('type', markerType);
     marker.setAttribute('preset', 'custom');
     marker.setAttribute('url', markerURL);
+    marker.setAttribute('ar-tracking', '');
     return marker;
 }
 
@@ -78,9 +83,10 @@ const createBoxImage = (boxImageId, boxImageSrc) => {
     return img;
 }
 
-const createBox = (boxId, boxPosition, boxMaterial) => {
+const createBox = (boxId, boxClass, boxPosition, boxMaterial) => {
     const box = document.createElement('a-box');
     box.setAttribute('id', boxId);
+    box.setAttribute('class', boxClass);
     box.setAttribute('position', boxPosition);
     box.setAttribute('color', 'white');
     box.setAttribute('material', `src:#${boxMaterial}`);
@@ -92,6 +98,3 @@ const createBox = (boxId, boxPosition, boxMaterial) => {
 }
 
 window.addEventListener('DOMContentLoaded', getData);
-// getData();
-
-

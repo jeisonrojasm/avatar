@@ -9,7 +9,7 @@
   <title>AvatarQR</title>
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+  <!-- <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script> -->
   <script>
     AFRAME.registerComponent('handle-click-social-network', {
 
@@ -31,11 +31,17 @@
               break;
           }
         }
+
+        function imprimir(el) {
+          console.log(el);
+        }
         this.el.addEventListener('click', this.redirectSocialNetwork);
+        this.el.addEventListener('mouseenter', () => imprimir(this.el));
       },
 
       remove: function () {
         this.el.removeEventListener('click', this.redirectSocialNetwork);
+        this.el.removeEventListener('mouseleave', null);
       }
     })
   </script>
@@ -43,8 +49,9 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <a-scene id="root" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false;">    
-    
+  <a-scene id="root" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    vr-mode-ui="enabled: false;">
+
   </a-scene>
   <script src="./index.js"></script>
 </body>
