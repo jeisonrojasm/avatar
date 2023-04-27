@@ -19,7 +19,7 @@ const data = [
     },
     {
         id: 2,
-        urlMarker: "https://cdn.glitch.global/195d740c-12b9-4a9d-9a6d-7203f8059e7b/MARCADOR2.patt?v=1682462842151",
+        urlMarker: "https://cdn.glitch.global/195d740c-12b9-4a9d-9a6d-7203f8059e7b/MARCADORotraPrueba2.patt?v=1682617848999",
         urlModel: "https://models.readyplayer.me/643ef8fb4fe9dc6782cf5de2.glb",
         socialNetwork1: "facebook",
         socialNetwork2: "youtube",
@@ -28,7 +28,7 @@ const data = [
     },
     {
         id: 3,
-        urlMarker: "https://cdn.glitch.global/195d740c-12b9-4a9d-9a6d-7203f8059e7b/MARCADOR3.patt?v=1682462843505",
+        urlMarker: "https://cdn.glitch.global/195d740c-12b9-4a9d-9a6d-7203f8059e7b/MARCADORprueba3.patt?v=1682617850417",
         urlModel: "https://models.readyplayer.me/64484f2c71111f79b8480d73.glb",
         socialNetwork1: "youtube",
         socialNetwork2: "linkedin",

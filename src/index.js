@@ -1,33 +1,33 @@
-const root = document.getElementById('root');
-const scene = document.querySelector('a-scene');
+const scene = document.getElementById('scene');
 
 const boxPositions = {
     position1: '-0.6 1.8 0.0',
     position2: '-0.2 1.8 0.0',
     position3: '0.2 1.8 0.0',
-    position4: '0.6 1.8 0.0',
-}
+    position4: '0.6 1.8 0.0'
+};
+
+const boxDimensions = {
+    depth: '0.25',
+    height: '0.25',
+    width: '0.25'
+};
 
 const boxImages = {
     linkedin: 'https://cdn.glitch.global/8c23ebc0-9534-463d-a1e1-54b9894f2582/Linkedin.jpg?v=1681321316606',
     facebook: 'https://cdn.glitch.global/8c23ebc0-9534-463d-a1e1-54b9894f2582/Faceboook.jpg?v=1681321316216',
     youtube: 'https://cdn.glitch.global/8c23ebc0-9534-463d-a1e1-54b9894f2582/Youtube.jpg?v=1681321317020',
-    discord: 'https://cdn.glitch.global/8c23ebc0-9534-463d-a1e1-54b9894f2582/Discord.jpg?v=1681321315750',
-}
+    discord: 'https://cdn.glitch.global/8c23ebc0-9534-463d-a1e1-54b9894f2582/Discord.jpg?v=1681321315750'
+};
+
+const boxImagesLength = Object.keys(boxImages).length;
 
 async function getData() {
     try {
         const response = await fetch('http://localhost:3001/');
         const data = await response.json();
 
-        const camera = document.createElement('a-camera');
-        camera.setAttribute('camera', '');
-        camera.setAttribute('raycaster', '');
-        camera.setAttribute('position', '0 0 0');
-        camera.setAttribute('fov', '45');
-        camera.setAttribute('look-controls-enabled', 'false');
-
-        root.insertAdjacentElement('afterbegin', camera);
+        createCamera();
 
         const markerData = {};
 
@@ -38,13 +38,13 @@ async function getData() {
             marker.appendChild(entity);
 
             marker.addEventListener('markerFound', function () {
-                for (let i = 1; i < 5; i++) {
-                    const box = createBox(e[`socialNetwork${i}`], `marker${e.id}`, boxPositions[`position${i}`], boxImages[`${e[`socialNetwork${i}`]}`]);
-                    markerData[`box${i}-marker${e.id}`] = box;
-                }
-
                 const idMarker = marker.id;
-                for (let i = 1; i < 5; i++) {
+
+                for (let i = 1; i < boxImagesLength + 1; i++) {
+                    const box = createBox(e[`socialNetwork${i}`], `marker${e.id}`, boxPositions[`position${i}`], boxImages[`${e[`socialNetwork${i}`]}`], boxDimensions.depth, boxDimensions.height, boxDimensions.width);
+
+                    markerData[`box${i}-marker${e.id}`] = box;
+
                     if (markerData.hasOwnProperty(`box${i}-${idMarker}`)) {
                         marker.appendChild(markerData[`box${i}-${idMarker}`]);
                     }
@@ -53,24 +53,32 @@ async function getData() {
 
             marker.addEventListener('markerLost', function () {
                 const idMarker = marker.id;
-                for (let i = 1; i < 5; i++) {
+                for (let i = 1; i < boxImagesLength + 1; i++) {
                     if (markerData.hasOwnProperty(`box${i}-${idMarker}`)) {
                         marker.removeChild(markerData[`box${i}-${idMarker}`]);
                     }
-                }
-
-                for (let i = 1; i < 5; i++) {
                     delete markerData[`box${i}-marker${e.id}`];
                 }
             });
 
-            root.insertAdjacentElement('afterbegin', marker);
+            scene.insertAdjacentElement('afterbegin', marker);
         });
 
     } catch (error) {
         console.log(error);
     }
 }
+
+const createCamera = () => {
+    const camera = document.createElement('a-camera');
+    camera.setAttribute('camera', '');
+    camera.setAttribute('raycaster', '');
+    camera.setAttribute('position', '0 0 0');
+    camera.setAttribute('fov', '45');
+    camera.setAttribute('look-controls-enabled', 'false');
+
+    scene.insertAdjacentElement('afterbegin', camera);
+};
 
 const createMarker = (markerId, markerType, markerURL) => {
     const marker = document.createElement('a-marker');
@@ -91,16 +99,16 @@ const createEntity = (entityId, entityURL) => {
     return entity;
 }
 
-const createBox = (boxId, boxClass, boxPosition, boxMaterial) => {
+const createBox = (boxId, boxClass, boxPosition, boxMaterial, depth, height, width) => {
     const box = document.createElement('a-box');
     box.setAttribute('id', boxId);
     box.setAttribute('class', boxClass);
     box.setAttribute('position', boxPosition);
     box.setAttribute('color', 'white');
     box.setAttribute('material', `src:${boxMaterial}`);
-    box.setAttribute('depth', '0.3');
-    box.setAttribute('height', '0.3');
-    box.setAttribute('width', '0.3');
+    box.setAttribute('depth', depth);
+    box.setAttribute('height', height);
+    box.setAttribute('width', width);
     box.setAttribute('handle-click-social-network', '');
     return box;
 }
