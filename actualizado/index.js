@@ -29,26 +29,42 @@ async function getData() {
 
         root.insertAdjacentElement('afterbegin', camera);
 
+        const markerData = {};
+
         data.forEach(e => {
             const marker = createMarker(`marker${e.id}`, 'pattern', e.urlMarker);
-            const entity = createEntity(`entity${e.id}`, e.urlModel);
-
-
+            const entity = createEntity(`entity${e.id}-marker${e.id}`, e.urlModel);
 
             marker.appendChild(entity);
 
-            for (let i = 1; i < 5; i++) {
-                const img = createBoxImage(`boxImage${i}-entity${e.id}`, boxImages[e[`socialNetwork${i}`]]);
-                marker.appendChild(img);
-            }
+            marker.addEventListener('markerFound', function () {
+                for (let i = 1; i < 5; i++) {
+                    const box = createBox(e[`socialNetwork${i}`], `marker${e.id}`, boxPositions[`position${i}`], boxImages[`${e[`socialNetwork${i}`]}`]);
+                    markerData[`box${i}-marker${e.id}`] = box;
+                }
 
-            for (let i = 1; i < 5; i++) {
-                const box = createBox(e[`socialNetwork${i}`], `box${i}-entity${e.id}`, boxPositions[`position${i}`], `boxImage${i}-entity${e.id}`);
-                marker.appendChild(box);
-            }
+                const idMarker = marker.id;
+                for (let i = 1; i < 5; i++) {
+                    if (markerData.hasOwnProperty(`box${i}-${idMarker}`)) {
+                        marker.appendChild(markerData[`box${i}-${idMarker}`]);
+                    }
+                }
+            });
+
+            marker.addEventListener('markerLost', function () {
+                const idMarker = marker.id;
+                for (let i = 1; i < 5; i++) {
+                    if (markerData.hasOwnProperty(`box${i}-${idMarker}`)) {
+                        marker.removeChild(markerData[`box${i}-${idMarker}`]);
+                    }
+                }
+
+                for (let i = 1; i < 5; i++) {
+                    delete markerData[`box${i}-marker${e.id}`];
+                }
+            });
 
             root.insertAdjacentElement('afterbegin', marker);
-
         });
 
     } catch (error) {
@@ -75,21 +91,13 @@ const createEntity = (entityId, entityURL) => {
     return entity;
 }
 
-const createBoxImage = (boxImageId, boxImageSrc) => {
-    const img = document.createElement('img');
-    img.setAttribute('crossorigin', 'anonymous');
-    img.setAttribute('id', boxImageId);
-    img.setAttribute('src', boxImageSrc);
-    return img;
-}
-
 const createBox = (boxId, boxClass, boxPosition, boxMaterial) => {
     const box = document.createElement('a-box');
     box.setAttribute('id', boxId);
     box.setAttribute('class', boxClass);
     box.setAttribute('position', boxPosition);
     box.setAttribute('color', 'white');
-    box.setAttribute('material', `src:#${boxMaterial}`);
+    box.setAttribute('material', `src:${boxMaterial}`);
     box.setAttribute('depth', '0.3');
     box.setAttribute('height', '0.3');
     box.setAttribute('width', '0.3');
