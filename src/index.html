@@ -9,6 +9,7 @@
   <title>AvatarQR</title>
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
   <script>
     AFRAME.registerComponent('handle-click-social-network', {
 
@@ -39,12 +40,27 @@
       }
     })
   </script>
+  <style>
+    video {
+      opacity: 1;
+      transform: scaleX(1) !important;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-    vr-mode-ui="enabled: false;">
+  <video id="preview"></video>
+  <canvas id="canvas"></canvas>
+
+  <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false;">
+    <a-marker type="pattern" preset="custom" url="../assets/MARCADOR3.patt" ar-tracking>
+      <p>Hola</p>
+      <p>A</p>
+      <p>Todos</p>
+    </a-marker>
   </a-scene>
   <script src="./index.js"></script>
 </body>

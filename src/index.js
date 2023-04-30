@@ -1,16 +1,22 @@
+// SCAN QR VALUE
+
+const video = document.getElementById('preview');
+const scanner = new Instascan.Scanner({ video });
+
+const marker = document.querySelector('a-marker');
 const scene = document.getElementById('scene');
 
 const boxPositions = {
-    position1: '-0.6 1.8 0.0',
-    position2: '-0.2 1.8 0.0',
-    position3: '0.2 1.8 0.0',
-    position4: '0.6 1.8 0.0'
+    position1: '-3.0 7.0 0.0',
+    position2: '-1.0 7.0 0.0',
+    position3: '1.0 7.0 0.0',
+    position4: '3.0 7.0 0.0'
 };
 
 const boxDimensions = {
-    depth: '0.25',
-    height: '0.25',
-    width: '0.25'
+    depth: '1.25',
+    height: '1.25',
+    width: '1.25'
 };
 
 const boxImages = {
@@ -20,54 +26,85 @@ const boxImages = {
     discord: 'https://cdn.glitch.global/8c23ebc0-9534-463d-a1e1-54b9894f2582/Discord.jpg?v=1681321315750'
 };
 
+Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length > 0) {
+        scanner.start(cameras[0]);
+    } else {
+        console.error('No cameras found.');
+    }
+});
+
+// ESCANEAR QR
+
+scanner.addListener('scan', function (content) {
+    console.log('QR: ' + content);
+
+    const lastIndexOfSlash = content.lastIndexOf('/');
+    const lastIndexOfDot = content.lastIndexOf('.');
+
+    const idAvatar = content.slice(lastIndexOfSlash + 1, lastIndexOfDot);
+
+    while (marker.firstChild) {
+        marker.removeChild(marker.firstChild);
+    }
+
+    const camera = document.querySelector('a-camera');
+
+    if (camera) {
+        scene.removeChild(camera);
+    }
+
+    getData(idAvatar);
+});
+
 const boxImagesLength = Object.keys(boxImages).length;
 
-async function getData() {
+// FETCH
+
+async function getData(idAvatar) {
     try {
-        const response = await fetch('http://localhost:3001/');
+        const response = await fetch(`http://localhost:3001/avatars/${idAvatar}`);
         const data = await response.json();
+
+        const { social } = data;
+        const { urlRPM } = data;
+        console.log(social);
+
+        console.log(data);
 
         createCamera();
 
         const markerData = {};
 
-        data.forEach(e => {
-            const marker = createMarker(`marker${e.id}`, 'pattern', e.urlMarker);
-            const entity = createEntity(`entity${e.id}-marker${e.id}`, e.urlModel);
-
+        marker.addEventListener('markerFound', function () {
+            while (marker.firstChild) {
+                marker.removeChild(marker.firstChild);
+            }
+            console.log('Marcador Encontrado');
+            const entity = createEntity(urlRPM);
             marker.appendChild(entity);
 
-            marker.addEventListener('markerFound', function () {
-                const idMarker = marker.id;
+            for (let i = 0; i < social.length; i++) {
+                const socialName = social[i].name;
+                const box = createBox(socialName, boxPositions[`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width);
 
-                for (let i = 1; i < boxImagesLength + 1; i++) {
-                    const box = createBox(e[`socialNetwork${i}`], `marker${e.id}`, boxPositions[`position${i}`], boxImages[`${e[`socialNetwork${i}`]}`], boxDimensions.depth, boxDimensions.height, boxDimensions.width);
+                markerData[socialName] = box;
+                marker.appendChild(box);
+            }
+        });
 
-                    markerData[`box${i}-marker${e.id}`] = box;
-
-                    if (markerData.hasOwnProperty(`box${i}-${idMarker}`)) {
-                        marker.appendChild(markerData[`box${i}-${idMarker}`]);
-                    }
-                }
-            });
-
-            marker.addEventListener('markerLost', function () {
-                const idMarker = marker.id;
-                for (let i = 1; i < boxImagesLength + 1; i++) {
-                    if (markerData.hasOwnProperty(`box${i}-${idMarker}`)) {
-                        marker.removeChild(markerData[`box${i}-${idMarker}`]);
-                    }
-                    delete markerData[`box${i}-marker${e.id}`];
-                }
-            });
-
-            scene.insertAdjacentElement('afterbegin', marker);
+        marker.addEventListener('markerLost', function () {
+            while (marker.firstChild) {
+                marker.removeChild(marker.firstChild);
+            }
         });
 
     } catch (error) {
         console.log(error);
     }
 }
+
+// MÉTODOS
 
 const createCamera = () => {
     const camera = document.createElement('a-camera');
@@ -77,32 +114,20 @@ const createCamera = () => {
     camera.setAttribute('fov', '45');
     camera.setAttribute('look-controls-enabled', 'false');
 
-    scene.insertAdjacentElement('afterbegin', camera);
+    scene.appendChild(camera);
 };
 
-const createMarker = (markerId, markerType, markerURL) => {
-    const marker = document.createElement('a-marker');
-    marker.setAttribute('id', markerId);
-    marker.setAttribute('type', markerType);
-    marker.setAttribute('preset', 'custom');
-    marker.setAttribute('url', markerURL);
-    marker.setAttribute('ar-tracking', '');
-    return marker;
-}
-
-const createEntity = (entityId, entityURL) => {
+const createEntity = (content) => {
     const entity = document.createElement('a-entity');
-    entity.setAttribute('id', entityId);
-    entity.setAttribute('gltf-model', entityURL);
     entity.setAttribute('position', '0.0 0.0 0.0');
-    entity.setAttribute('scale', '1.0 0.8 0.8');
+    entity.setAttribute('scale', '3 3 3');
+    entity.setAttribute('gltf-model', content);
     return entity;
 }
 
-const createBox = (boxId, boxClass, boxPosition, boxMaterial, depth, height, width) => {
+const createBox = (boxId, boxPosition, boxMaterial, depth, height, width) => {
     const box = document.createElement('a-box');
     box.setAttribute('id', boxId);
-    box.setAttribute('class', boxClass);
     box.setAttribute('position', boxPosition);
     box.setAttribute('color', 'white');
     box.setAttribute('material', `src:${boxMaterial}`);
@@ -112,5 +137,3 @@ const createBox = (boxId, boxClass, boxPosition, boxMaterial, depth, height, wid
     box.setAttribute('handle-click-social-network', '');
     return box;
 }
-
-window.addEventListener('DOMContentLoaded', getData);
