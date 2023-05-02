@@ -10,6 +10,10 @@
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.min.js"
+    integrity="sha512-n8IpKWzDnBOcBhRlHirMZOUvEq2bLRMuJGjuVqbzUJwtTsgwOgK5aS0c1JA647XWYfqvXve8k3PtZdzpipFjgg=="
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
   <script>
     AFRAME.registerComponent('handle-click-social-network', {
 
@@ -40,6 +44,28 @@
       }
     })
   </script>
+  <script>
+    AFRAME.registerComponent('handleModelLoaded', {
+      
+      init: function () {
+        console.log('entity loaded');
+        const loader = new THREE.GLTFLoader();
+        const el = this.el;
+        loader.load(
+          '../assets/animated-m.glb',
+          function (gltf) {
+            el.setObject3D('animation', gltf.scene);
+          },
+          function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+          },
+          function (error) {
+            console.error('Error loading glTF asset', error);
+          }
+        );
+      }
+    });
+  </script>
   <style>
     video {
       opacity: 1;
@@ -55,10 +81,12 @@
   <video id="preview"></video>
   <canvas id="canvas"></canvas>
 
-  <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false;">
+  <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    vr-mode-ui="enabled: false;">
     <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking></a-marker>
   </a-scene>
   <script src="./index.js"></script>
+
 </body>
 
 </html>

@@ -1,10 +1,12 @@
-// SCAN QR VALUE
-
 const video = document.getElementById('preview');
 const scanner = new Instascan.Scanner({ video });
 
 const marker = document.querySelector('a-marker');
 const scene = document.getElementById('scene');
+
+
+
+// SCAN QR VALUE
 
 const boxPositions = {
     position1: '-3.0 7.0 0.0',
@@ -122,6 +124,8 @@ const createEntity = (content) => {
     entity.setAttribute('position', '0.0 0.0 0.0');
     entity.setAttribute('scale', '3 3 3');
     entity.setAttribute('gltf-model', content);
+    entity.setAttribute('animation-mixer', '');
+    entity.setAttribute('handleModelLoaded', '');
     return entity;
 }
 
