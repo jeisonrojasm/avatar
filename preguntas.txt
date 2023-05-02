@@ -2,5 +2,4 @@
 -) ¿El id del objeto retornado por la petición GET es el mismo id del avatar en Ready player Me?
 1) ¿El array que contiene las redes sociales siempre devolverá 4 redes sociales?
 2) ¿La propiedad name del objeto retornado hace referencia al nombre del avatar?
-4) ¿A qué se refieren con que es necesario revisar el proceso de autorización del servicio?
 

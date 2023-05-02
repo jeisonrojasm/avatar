@@ -1,0 +1,65 @@
+swagger: "2.0"
+info:
+  description: API - Avatar - CI2
+  version: 1.0.0
+  title: API - Avatar - CI2
+host: main.d14z3n2zfezi4a.amplifyapp.com
+basePath: /api
+tags:
+- name: avatars
+  description: Operaciones asociadas a los avatars
+schemes:
+- https
+- http
+paths:
+  /avatars/{idAvatar}:
+    get:
+      tags:
+      - avatars
+      summary: Retorna la información de un avatar
+      operationId: findAvatarById
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer token authorization
+        required: true
+        type: string
+      - name: idAvatar
+        in: path
+        description: ID del avatar
+        required: true
+        type: string
+      responses:
+        200:
+          description: Operación exitosa
+          schema:
+            $ref: "#/definitions/Avatar"
+        404:
+          description: Avatar no encontrado
+        500:
+          description: Error técnico
+definitions:
+  Avatar:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      social:
+        type: array
+        items:
+              $ref: '#/definitions/Social'
+      urlRPM:
+        type: "string"
+  Social:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      identifier:
+        type: "string"
