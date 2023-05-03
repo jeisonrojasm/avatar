@@ -13,7 +13,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.min.js"
     integrity="sha512-n8IpKWzDnBOcBhRlHirMZOUvEq2bLRMuJGjuVqbzUJwtTsgwOgK5aS0c1JA647XWYfqvXve8k3PtZdzpipFjgg=="
     crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/fflate"></script>
+  <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/FBXLoader.js"></script>
   <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
+
+
+  <!-- FBXLoader -->
+  <!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/r128/examples/js/loaders/FBXLoader.js"></script> -->
+
   <script>
     AFRAME.registerComponent('handle-click-social-network', {
 
@@ -45,24 +53,54 @@
     })
   </script>
   <script>
-    AFRAME.registerComponent('handleModelLoaded', {
-      
+    AFRAME.registerComponent('handle-model-loaded', {
+
+      schema: {
+        model: { type: 'string' }
+      },
+
       init: function () {
-        console.log('entity loaded');
-        const loader = new THREE.GLTFLoader();
-        const el = this.el;
-        loader.load(
-          '../assets/animated-m.glb',
-          function (gltf) {
-            el.setObject3D('animation', gltf.scene);
-          },
-          function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-          },
-          function (error) {
-            console.error('Error loading glTF asset', error);
+        const that = this;
+
+        const loaderModelo = new THREE.GLTFLoader();
+
+        const modeloGLB = `${that.data.model}`;
+
+        loaderModelo.load(modeloGLB, function (gltf) {
+
+          const scene = gltf.scene;
+          const armature = scene.getObjectByName('Armature');
+          let actual = armature;
+
+          let bones = actual.children[0];
+
+          // --------------------------------------------------------------------------
+          // Cambiar nombre de los huesos y agregarle el string 'mixamorig:' al comienzo
+          cambiarNombreHuesos(bones);
+
+          function cambiarNombreHuesos(actual) {
+            if (actual.type === 'Bone') {
+              actual.name = 'mixamorig:' + actual.name;
+              if (actual.children.length > 0) {
+                actual.children.forEach(e => {
+                  cambiarNombreHuesos(e);
+                });
+              }
+              return;
+            }
+            return;
           }
-        );
+          // --------------------------------------------------------------------------
+
+          const fbxLoader = new THREE.FBXLoader();
+          fbxLoader.load('../assets/dancing.fbx', function (fbx) {
+            // Crear el objeto AnimationMixer y añadir la animación al modelo GLB
+            const mixer = new THREE.AnimationMixer(gltf.scene);
+            const action = mixer.clipAction(fbx.animations[0]);
+            action.play();
+            console.log('La animación se está reproduciendo en la consola.');
+          });
+        });
       }
     });
   </script>
@@ -86,6 +124,9 @@
     <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking></a-marker>
   </a-scene>
   <script src="./index.js"></script>
+  <script>
+
+  </script>
 
 </body>
 

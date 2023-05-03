@@ -120,12 +120,12 @@ const createCamera = () => {
 };
 
 const createEntity = (content) => {
-    const entity = document.createElement('a-entity');
+    const entity = document.createElement("a-entity");
     entity.setAttribute('position', '0.0 0.0 0.0');
     entity.setAttribute('scale', '3 3 3');
     entity.setAttribute('gltf-model', content);
     entity.setAttribute('animation-mixer', '');
-    entity.setAttribute('handleModelLoaded', '');
+    entity.setAttribute('handle-model-loaded', `model: ${content}`);
     return entity;
 }
 
