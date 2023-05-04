@@ -125,7 +125,6 @@ const createEntity = (content) => {
     entity.setAttribute('scale', '3 3 3');
     entity.setAttribute('gltf-model', content);
     entity.setAttribute('animation-mixer', '');
-    entity.setAttribute('handle-model-loaded', `model: ${content}`);
     return entity;
 }
 
