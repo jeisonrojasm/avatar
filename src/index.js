@@ -16,9 +16,9 @@ const boxPositions = {
 };
 
 const boxDimensions = {
-    depth: '1.25',
-    height: '1.25',
-    width: '1.25'
+    depth: '1.5',
+    height: '1.5',
+    width: '1.5'
 };
 
 const boxImages = {
@@ -123,7 +123,7 @@ const createEntity = (content) => {
     const entity = document.createElement("a-entity");
     entity.setAttribute('position', '0.0 0.0 0.0');
     entity.setAttribute('scale', '3 3 3');
-    entity.setAttribute('gltf-model', content);
+    entity.setAttribute('modelo-gltf', content);
     entity.setAttribute('animation-mixer', '');
     return entity;
 }

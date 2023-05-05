@@ -4,7 +4,7 @@ const port = 3001;
 
 const cors = require("cors");
 app.use(cors({
-    origin: "http://127.0.0.1:5501"
+    origin: "http://127.0.0.1:5502"
 }));
 
 const data = [{
