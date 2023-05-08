@@ -4,12 +4,26 @@ const scanner = new Instascan.Scanner({ video });
 const marker = document.querySelector('a-marker');
 const scene = document.getElementById('scene');
 
-const boxPositions = {
-    position1: '-3.0 7.0 0.0',
-    position2: '-1.0 7.0 0.0',
-    position3: '1.0 7.0 0.0',
-    position4: '3.0 7.0 0.0'
-};
+const boxPositions = [
+    {
+        position1: '0.0 7.0 0.0'
+    },
+    {
+        position1: '-1.0 7.0 0.0',
+        position2: '1.0 7.0 0.0'
+    },
+    {
+        position1: '-2 7.0 0.0',
+        position2: '0.0 7.0 0.0',
+        position3: '2 7.0 0.0'
+    },
+    {
+        position1: '-3.0 7.0 0.0',
+        position2: '-1.0 7.0 0.0',
+        position3: '1.0 7.0 0.0',
+        position4: '3.0 7.0 0.0'
+    }
+];
 
 const boxDimensions = {
     depth: '1.5',
@@ -76,9 +90,11 @@ async function getData(idAvatar) {
 
         const { social } = data;
         const { urlRPM } = data;
+        const amountOfBoxes = social.length;
 
         console.log(data);
         console.log(social);
+        console.log(amountOfBoxes);
 
         createCamera();
 
@@ -92,9 +108,10 @@ async function getData(idAvatar) {
             const entity = createEntity(urlRPM);
             marker.appendChild(entity);
 
-            for (let i = 0; i < social.length; i++) {
+            const position = 0
+            for (let i = 0; i < amountOfBoxes; i++) {
                 const socialName = social[i].name;
-                const box = createBox(socialName, boxPositions[`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width);
+                const box = createBox(socialName, boxPositions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width);
 
                 markerData[socialName] = box;
                 marker.appendChild(box);

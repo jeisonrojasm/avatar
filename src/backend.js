@@ -58,19 +58,19 @@ const data = [{
     "name": "AndreaRojas",
     "social": [
         {
-            "name": "pinterest",
+            "name": "linkedin",
             "identifier": "AndreaRojas"
         },
         {
-            "name": "tiktok",
+            "name": "linkedin",
             "identifier": "AndreaRojas"
         },
         {
-            "name": "youtube",
+            "name": "linkedin",
             "identifier": "AndreaRojas"
         },
         {
-            "name": "discord",
+            "name": "linkedin",
             "identifier": "AndreaRojas"
         }
     ],
@@ -80,15 +80,15 @@ const data = [{
 
 app.get('/avatars/:idAvatar', (req, res) => {
     const id = req.params.idAvatar;
-  
+
     const result = data.find(obj => obj.id === id);
-  
+
     if (result) {
-      res.json(result);
+        res.json(result);
     } else {
-      res.status(404).json({ message: 'Objeto no encontrado' });
+        res.status(404).json({ message: 'Objeto no encontrado' });
     }
-  });
+});
 
 app.listen(port, () => {
     console.log(`La API está escuchando en el puerto ${port}.`);
