@@ -58,7 +58,11 @@ const data = [{
     "name": "AndreaRojas",
     "social": [
         {
-            "name": "linkedin",
+            "name": "pinterest",
+            "identifier": "AndreaRojas"
+        },
+        {
+            "name": "tiktok",
             "identifier": "AndreaRojas"
         },
         {
@@ -67,10 +71,6 @@ const data = [{
         },
         {
             "name": "discord",
-            "identifier": "AndreaRojas"
-        },
-        {
-            "name": "facebook",
             "identifier": "AndreaRojas"
         }
     ],

@@ -4,10 +4,6 @@ const scanner = new Instascan.Scanner({ video });
 const marker = document.querySelector('a-marker');
 const scene = document.getElementById('scene');
 
-
-
-// SCAN QR VALUE
-
 const boxPositions = {
     position1: '-3.0 7.0 0.0',
     position2: '-1.0 7.0 0.0',
@@ -21,11 +17,23 @@ const boxDimensions = {
     width: '1.5'
 };
 
+const boxImagesPath = '../assets/images/';
+
 const boxImages = {
-    linkedin: 'https://cdn.glitch.global/8c23ebc0-9534-463d-a1e1-54b9894f2582/Linkedin.jpg?v=1681321316606',
-    facebook: 'https://cdn.glitch.global/8c23ebc0-9534-463d-a1e1-54b9894f2582/Faceboook.jpg?v=1681321316216',
-    youtube: 'https://cdn.glitch.global/8c23ebc0-9534-463d-a1e1-54b9894f2582/Youtube.jpg?v=1681321317020',
-    discord: 'https://cdn.glitch.global/8c23ebc0-9534-463d-a1e1-54b9894f2582/Discord.jpg?v=1681321315750'
+    instagram: `${boxImagesPath}instagram.png`,
+    facebook: `${boxImagesPath}facebook.png`,
+    twitter: `${boxImagesPath}twitter.png`,
+    whatsapp: `${boxImagesPath}whatsapp.png`,
+    linkedin: `${boxImagesPath}linkedin.png`,
+    correo: `${boxImagesPath}correo.png`,
+    telegram: `${boxImagesPath}telegram.png`,
+    messenger: `${boxImagesPath}messenger.png`,
+    snapchat: `${boxImagesPath}snapchat.png`,
+    spotify: `${boxImagesPath}spotify.png`,
+    youtube: `${boxImagesPath}youtube.png`,
+    discord: `${boxImagesPath}discord.png`,
+    pinterest: `${boxImagesPath}pinterest.png`,
+    tiktok: `${boxImagesPath}tiktok.png`
 };
 
 Instascan.Camera.getCameras().then(function (cameras) {
@@ -37,7 +45,6 @@ Instascan.Camera.getCameras().then(function (cameras) {
 });
 
 // ESCANEAR QR
-
 scanner.addListener('scan', function (content) {
     console.log('QR: ' + content);
 
@@ -62,7 +69,6 @@ scanner.addListener('scan', function (content) {
 const boxImagesLength = Object.keys(boxImages).length;
 
 // FETCH
-
 async function getData(idAvatar) {
     try {
         const response = await fetch(`http://localhost:3001/avatars/${idAvatar}`);
@@ -70,9 +76,9 @@ async function getData(idAvatar) {
 
         const { social } = data;
         const { urlRPM } = data;
-        console.log(social);
 
         console.log(data);
+        console.log(social);
 
         createCamera();
 
@@ -107,7 +113,6 @@ async function getData(idAvatar) {
 }
 
 // MÉTODOS
-
 const createCamera = () => {
     const camera = document.createElement('a-camera');
     camera.setAttribute('camera', '');
