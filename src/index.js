@@ -33,19 +33,19 @@ const boxDimensions = {
 
 const boxImagesPath = '../assets/images/';
 
-const boxImages = {
+export const boxImages = {
     instagram: `${boxImagesPath}instagram.png`,
     facebook: `${boxImagesPath}facebook.png`,
     twitter: `${boxImagesPath}twitter.png`,
-    whatsapp: `${boxImagesPath}whatsapp.png`,
+    whatsapp: `${boxImagesPath}whatsapp.png`, //Revisar redireccionamiento correcto
     linkedin: `${boxImagesPath}linkedin.png`,
-    correo: `${boxImagesPath}correo.png`,
+    correo: `${boxImagesPath}correo.png`, //Revisar redireccionamiento correcto
     telegram: `${boxImagesPath}telegram.png`,
     messenger: `${boxImagesPath}messenger.png`,
     snapchat: `${boxImagesPath}snapchat.png`,
-    spotify: `${boxImagesPath}spotify.png`,
+    spotify: `${boxImagesPath}spotify.png`, //Revisar redireccionamiento correcto
     youtube: `${boxImagesPath}youtube.png`,
-    discord: `${boxImagesPath}discord.png`,
+    discord: `${boxImagesPath}discord.png`, //Revisar redireccionamiento correcto
     pinterest: `${boxImagesPath}pinterest.png`,
     tiktok: `${boxImagesPath}tiktok.png`
 };
@@ -111,7 +111,8 @@ async function getData(idAvatar) {
             const position = 0
             for (let i = 0; i < amountOfBoxes; i++) {
                 const socialName = social[i].name;
-                const box = createBox(socialName, boxPositions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width);
+                const userName = social[i].identifier;
+                const box = createBox(socialName, boxPositions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width, userName);
 
                 markerData[socialName] = box;
                 marker.appendChild(box);
@@ -125,7 +126,7 @@ async function getData(idAvatar) {
         });
 
     } catch (error) {
-        console.log(error);
+        alert('Es posible que estés intentando escanear un código QR inválido. Asegúrate de intentar escanear un código QR válido e inténtalo de nuevo.');
     }
 }
 
@@ -150,7 +151,7 @@ const createEntity = (content) => {
     return entity;
 }
 
-const createBox = (boxId, boxPosition, boxMaterial, depth, height, width) => {
+const createBox = (boxId, boxPosition, boxMaterial, depth, height, width, username) => {
     const box = document.createElement('a-box');
     box.setAttribute('id', boxId);
     box.setAttribute('position', boxPosition);
@@ -159,6 +160,7 @@ const createBox = (boxId, boxPosition, boxMaterial, depth, height, width) => {
     box.setAttribute('depth', depth);
     box.setAttribute('height', height);
     box.setAttribute('width', width);
+    box.setAttribute('username', username);
     box.setAttribute('handle-click-social-network', '');
     return box;
 }

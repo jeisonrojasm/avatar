@@ -58,19 +58,19 @@ const data = [{
     "name": "AndreaRojas",
     "social": [
         {
-            "name": "linkedin",
+            "name": "pinterest",
             "identifier": "AndreaRojas"
         },
         {
-            "name": "linkedin",
+            "name": "spotify",
             "identifier": "AndreaRojas"
         },
         {
-            "name": "linkedin",
+            "name": "tiktok",
             "identifier": "AndreaRojas"
         },
         {
-            "name": "linkedin",
+            "name": "discord",
             "identifier": "AndreaRojas"
         }
     ],

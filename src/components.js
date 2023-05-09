@@ -1,21 +1,34 @@
+import { boxImages } from "./index.js";
+
+
+const socialNetworksArr = Object.keys(boxImages);
+const socialNetworks = socialNetworksArr.map(e => `https://www.${e}.com`);
+console.log(socialNetworks);
+
 AFRAME.registerComponent('handle-click-social-network', {
 
     init: function () {
         this.redirectSocialNetwork = function (e) {
             const socialNetwork = e.target.id;
-            switch (socialNetwork) {
-                case ('linkedin'):
-                    window.open('https://www.linkedin.com');
-                    break;
-                case ('facebook'):
-                    window.open('https://www.facebook.com');
-                    break;
-                case ('youtube'):
-                    window.open('https://www.youtube.com');
-                    break;
-                case ('discord'):
-                    window.open('https://www.discord.com');
-                    break;
+            const username = e.target.getAttribute('username');
+            for (let i = 0; i < socialNetworksArr.length; i++) {
+                if (socialNetwork === socialNetworksArr[i]) {
+                    if (socialNetwork === 'linkedin') {
+                        window.open(`${socialNetworks[i]}/in/${username}`);
+                    } else if (socialNetwork === 'telegram') {
+                        window.open(`https://t.me/${username}`);
+                    } else if (socialNetwork === 'messenger') {
+                        window.open(`https://m.me/${username}`);
+                    } else if (socialNetwork === 'snapchat') {
+                        window.open(`https://www.snapchat.com/add/${username}`);
+                    } else if (socialNetwork === 'spotify') {
+                        window.open(`https://open.spotify.com/user/${username}`);
+                    } else if (socialNetwork === 'tiktok') {
+                        window.open(`https://www.tiktok.com/@${username}`);
+                    } else {
+                        window.open(`${socialNetworks[i]}/${username}`);
+                    }
+                }
             }
         }
 
