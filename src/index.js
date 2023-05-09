@@ -62,10 +62,11 @@ Instascan.Camera.getCameras().then(function (cameras) {
 scanner.addListener('scan', function (content) {
     console.log('QR: ' + content);
 
-    const lastIndexOfSlash = content.lastIndexOf('/');
-    const lastIndexOfDot = content.lastIndexOf('.');
+    const lastIndexOfSlash = content.lastIndexOf('avatar=');
 
-    const idAvatar = content.slice(lastIndexOfSlash + 1, lastIndexOfDot);
+    const idAvatar = content.slice(lastIndexOfSlash + 7);
+
+    console.log(idAvatar);
 
     while (marker.firstChild) {
         marker.removeChild(marker.firstChild);
@@ -85,7 +86,7 @@ const boxImagesLength = Object.keys(boxImages).length;
 // FETCH
 async function getData(idAvatar) {
     try {
-        const response = await fetch(`http://localhost:3001/avatars/${idAvatar}`);
+        const response = await fetch(`https://main.d14z3n2zfezi4a.amplifyapp.com/api/avatars/${idAvatar}`);
         const data = await response.json();
 
         const { social } = data;
