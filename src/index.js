@@ -6,22 +6,22 @@ const scene = document.getElementById('scene');
 
 const boxPositions = [
     {
-        position1: '0.0 7.0 0.0'
+        position1: '0.0 16.0 0.0'
     },
     {
-        position1: '-1.0 7.0 0.0',
-        position2: '1.0 7.0 0.0'
+        position1: '-1.0 16.0 0.0',
+        position2: '1.0 16.0 0.0'
     },
     {
-        position1: '-2 7.0 0.0',
-        position2: '0.0 7.0 0.0',
-        position3: '2 7.0 0.0'
+        position1: '-2 16.0 0.0',
+        position2: '0.0 16.0 0.0',
+        position3: '2 16.0 0.0'
     },
     {
-        position1: '-3.0 7.0 0.0',
-        position2: '-1.0 7.0 0.0',
-        position3: '1.0 7.0 0.0',
-        position4: '3.0 7.0 0.0'
+        position1: '-3.0 16.0 0.0',
+        position2: '-1.0 16.0 0.0',
+        position3: '1.0 16.0 0.0',
+        position4: '3.0 16.0 0.0'
     }
 ];
 
@@ -34,20 +34,20 @@ const boxDimensions = {
 const boxImagesPath = '../assets/images/';
 
 export const boxImages = {
-    instagram: `${boxImagesPath}instagram.png`,
-    facebook: `${boxImagesPath}facebook.png`,
-    twitter: `${boxImagesPath}twitter.png`,
-    whatsapp: `${boxImagesPath}whatsapp.png`, //Revisar redireccionamiento correcto
-    linkedin: `${boxImagesPath}linkedin.png`,
-    correo: `${boxImagesPath}correo.png`, //Revisar redireccionamiento correcto
-    telegram: `${boxImagesPath}telegram.png`,
-    messenger: `${boxImagesPath}messenger.png`,
-    snapchat: `${boxImagesPath}snapchat.png`,
-    spotify: `${boxImagesPath}spotify.png`, //Revisar redireccionamiento correcto
-    youtube: `${boxImagesPath}youtube.png`,
-    discord: `${boxImagesPath}discord.png`, //Revisar redireccionamiento correcto
-    pinterest: `${boxImagesPath}pinterest.png`,
-    tiktok: `${boxImagesPath}tiktok.png`
+    Instagram: `${boxImagesPath}instagram.png`,
+    Facebook: `${boxImagesPath}facebook.png`,
+    Twitter: `${boxImagesPath}twitter.png`,
+    WhatsApp: `${boxImagesPath}whatsapp.png`,
+    LinkedIn: `${boxImagesPath}linkedin.png`,
+    correo: `${boxImagesPath}correo.png`,
+    Telegram: `${boxImagesPath}telegram.png`,
+    Messenger: `${boxImagesPath}messenger.png`,
+    Snapchat: `${boxImagesPath}snapchat.png`,
+    Spotify: `${boxImagesPath}spotify.png`,
+    Youtube: `${boxImagesPath}youtube.png`,
+    Discord: `${boxImagesPath}discord.png`,
+    Pinterest: `${boxImagesPath}pinterest.png`,
+    TikTok: `${boxImagesPath}tiktok.png`
 };
 
 Instascan.Camera.getCameras().then(function (cameras) {
@@ -58,6 +58,10 @@ Instascan.Camera.getCameras().then(function (cameras) {
     }
 });
 
+localStorage.setItem('idAvatarCurrent', '');
+let idAvatarCurrentLS = localStorage.getItem('idAvatarCurrent');
+let idAvatarLastLS = localStorage.setItem('idAvatarLast', '');
+
 // ESCANEAR QR
 scanner.addListener('scan', function (content) {
     console.log('QR: ' + content);
@@ -65,26 +69,32 @@ scanner.addListener('scan', function (content) {
     const lastIndexOfSlash = content.lastIndexOf('avatar=');
     const idAvatar = content.slice(lastIndexOfSlash + 7);
 
-    console.log(idAvatar);
+    localStorage.setItem('idAvatarCurrent', `${idAvatar}`);
+    idAvatarCurrentLS = localStorage.getItem('idAvatarCurrent');
+    idAvatarLastLS = localStorage.getItem('idAvatarLast');
 
-    while (marker.firstChild) {
-        marker.removeChild(marker.firstChild);
+    if (idAvatarCurrentLS !== idAvatarLastLS) {
+        while (marker.firstChild) {
+            marker.removeChild(marker.firstChild);
+        }
+
+        const camera = document.querySelector('a-camera');
+
+        if (camera) {
+            scene.removeChild(camera);
+        }
+
+        console.log('Haciendo fetch...');
+        localStorage.setItem('idAvatarLast', `${idAvatarCurrentLS}`);
+        getData(idAvatar);
     }
-
-    const camera = document.querySelector('a-camera');
-
-    if (camera) {
-        scene.removeChild(camera);
-    }
-
-    getData(idAvatar);
 });
 
 // FETCH
 async function getData(idAvatar) {
     try {
-        // const response = await fetch(`https://main.d14z3n2zfezi4a.amplifyapp.com/api/avatars/${idAvatar}`);
-        const response = await fetch(`http://localhost:3001/avatars/${idAvatar}`);
+        const response = await fetch(`https://main.d14z3n2zfezi4a.amplifyapp.com/api/avatars/${idAvatar}`);
+        // const response = await fetch(`http://localhost:3001/avatars/${idAvatar}`);
         const data = await response.json();
 
         const { social } = data;
@@ -109,7 +119,12 @@ async function getData(idAvatar) {
 
             const position = 0
             for (let i = 0; i < amountOfBoxes; i++) {
-                const socialName = social[i].name;
+                let socialName = social[i].name;
+
+                if (socialName === 'Correo electrónico') {
+                    socialName = 'correo';
+                }
+
                 const userName = social[i].identifier;
                 const box = createBox(socialName, boxPositions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width, userName);
 
@@ -137,6 +152,8 @@ const createCamera = () => {
     camera.setAttribute('position', '0 0 0');
     camera.setAttribute('fov', '45');
     camera.setAttribute('look-controls-enabled', 'false');
+    // camera.setAttribute('facingMode', 'environment');
+    camera.setAttribute('user-controls', '');
 
     scene.appendChild(camera);
 };
@@ -147,6 +164,7 @@ const createEntity = (content) => {
     entity.setAttribute('scale', '3 3 3');
     entity.setAttribute('modelo-gltf', content);
     entity.setAttribute('animation-mixer', '');
+    entity.setAttribute('rotation', '90 0 0');
     return entity;
 }
 

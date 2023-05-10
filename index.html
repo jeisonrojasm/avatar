@@ -27,7 +27,9 @@
   <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
   <video id="preview"></video>
 
-  <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false;">
+  <a-scene id="scene" cursor="rayOrigin: mouse"
+    arjs="trackingMethod: best; sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
+    vr-mode-ui="enabled: false;" camera-rear>
     <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking="color"></a-marker>
   </a-scene>
 
