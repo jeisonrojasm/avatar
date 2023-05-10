@@ -3,22 +3,20 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="icon" href="" />
+  <link rel="icon" href="./assets//images/icon-readyPlayerMe.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="" />
-  <title>AvatarQR</title>
+  <title>AR-AvatarQR</title>
   <link rel="stylesheet" href="./src/index.css">
 
-  <!-- Importar Aframe -->
+  <!-- Importar Aframe (Biblioteca de Realidad Virtual basada en THREE.js)-->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <!-- Importar ARjs -->
+  <!-- Importar ARjs (Biblioteca de Realidad Aumentada)-->
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <!-- Importar Instascan para escanear códigos QR -->
   <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
   <!-- Importar Aframe Extras para que las animaciones de objetos 3D funcionen -->
   <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.0/dist/aframe-extras.min.js"></script>
-  <!-- Importar FBXLoader para cargar archivos con extensión FBX -->
-  <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/FBXLoader.js"></script>
   <!-- Importar GLTFLoader para cargar archivos con extensión GLB y GLTF -->
   <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
 
@@ -28,10 +26,10 @@
 <body>
   <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
   <video id="preview"></video>
-  <canvas id="canvas"></canvas>
+  <canvas id="canvas"></canvas> <!-- Revisar si se puede omitir esta línea -->
 
   <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false;">
-    <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking></a-marker>
+    <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking></a-marker> <!-- Revisar si ar-tracking funciona mejor con pattern, color o orientation -->
   </a-scene>
 
   <script src="./src/index.js" type="module"></script>
