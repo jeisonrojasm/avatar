@@ -1,6 +1,5 @@
 import { boxImages } from "./index.js";
 
-
 const socialNetworksArr = Object.keys(boxImages);
 const socialNetworks = socialNetworksArr.map(e => `https://www.${e}.com`);
 console.log(socialNetworks);

@@ -4,7 +4,7 @@ const port = 3001;
 
 const cors = require("cors");
 app.use(cors({
-    origin: "http://127.0.0.1:5502"
+    origin: "http://127.0.0.1:5500"
 }));
 
 const data = [{
@@ -54,7 +54,7 @@ const data = [{
     "urlRPM": "https://models.readyplayer.me/643ef8fb4fe9dc6782cf5de2.glb"
 },
 {
-    "id": "64484f2c71111f79b8480d73",
+    "id": "643dbc2bf84f1ce609301b60",
     "name": "AndreaRojas",
     "social": [
         {
@@ -74,7 +74,7 @@ const data = [{
             "identifier": "AndreaRojas"
         }
     ],
-    "urlRPM": "https://models.readyplayer.me/64484f2c71111f79b8480d73.glb"
+    "urlRPM": "https://models.readyplayer.me/643dbc2bf84f1ce609301b60.glb"
 }];
 
 
