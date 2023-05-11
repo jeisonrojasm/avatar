@@ -1,5 +1,5 @@
-const video = document.getElementById('preview');
-const scanner = new Instascan.Scanner({ video });
+// const video = document.getElementById('preview');
+// const scanner = new Instascan.Scanner({ video });
 
 const marker = document.querySelector('a-marker');
 const scene = document.getElementById('scene');
@@ -50,45 +50,45 @@ export const boxImages = {
     TikTok: `${boxImagesPath}tiktok.png`
 };
 
-Instascan.Camera.getCameras().then(function (cameras) {
-    if (cameras.length > 0) {
-        scanner.start(cameras[0]);
-    } else {
-        console.error('No cameras found.');
-    }
-});
+// Instascan.Camera.getCameras().then(function (cameras) {
+//     if (cameras.length > 0) {
+//         scanner.start(cameras[0]);
+//     } else {
+//         console.error('No cameras found.');
+//     }
+// });
 
 localStorage.setItem('idAvatarCurrent', '');
 let idAvatarCurrentLS = localStorage.getItem('idAvatarCurrent');
 let idAvatarLastLS = localStorage.setItem('idAvatarLast', '');
 
 // ESCANEAR QR
-scanner.addListener('scan', function (content) {
-    console.log('QR: ' + content);
+// scanner.addListener('scan', function (content) {
+//     console.log('QR: ' + content);
 
-    const lastIndexOfSlash = content.lastIndexOf('avatar=');
-    const idAvatar = content.slice(lastIndexOfSlash + 7);
+//     const lastIndexOfSlash = content.lastIndexOf('avatar=');
+//     const idAvatar = content.slice(lastIndexOfSlash + 7);
 
-    localStorage.setItem('idAvatarCurrent', `${idAvatar}`);
-    idAvatarCurrentLS = localStorage.getItem('idAvatarCurrent');
-    idAvatarLastLS = localStorage.getItem('idAvatarLast');
+//     localStorage.setItem('idAvatarCurrent', `${idAvatar}`);
+//     idAvatarCurrentLS = localStorage.getItem('idAvatarCurrent');
+//     idAvatarLastLS = localStorage.getItem('idAvatarLast');
 
-    if (idAvatarCurrentLS !== idAvatarLastLS) {
-        while (marker.firstChild) {
-            marker.removeChild(marker.firstChild);
-        }
+//     if (idAvatarCurrentLS !== idAvatarLastLS) {
+//         while (marker.firstChild) {
+//             marker.removeChild(marker.firstChild);
+//         }
 
-        const camera = document.querySelector('a-camera');
+//         const camera = document.querySelector('a-camera');
 
-        if (camera) {
-            scene.removeChild(camera);
-        }
+//         if (camera) {
+//             scene.removeChild(camera);
+//         }
 
-        console.log('Haciendo fetch...');
-        localStorage.setItem('idAvatarLast', `${idAvatarCurrentLS}`);
-        getData(idAvatar);
-    }
-});
+//         console.log('Haciendo fetch...');
+//         localStorage.setItem('idAvatarLast', `${idAvatarCurrentLS}`);
+//         getData(idAvatar);
+//     }
+// });
 
 // FETCH
 async function getData(idAvatar) {
@@ -100,6 +100,24 @@ async function getData(idAvatar) {
         const { social } = data;
         const { urlRPM } = data;
         const amountOfBoxes = social.length;
+
+        const scene = document.createElement('a-scene');
+        scene.setAttribute('id', 'scene');
+        scene.setAttribute('cursor', 'rayOrigin: mouse');
+        scene.setAttribute('arjs', 'trackingMethod: best; sourceType: webcam; facingMode: environment; debugUIEnabled: false;');
+        scene.setAttribute('vr-mode-ui', 'enabled: false;');
+        scene.setAttribute('camera-rear', '');
+
+        const marker = document.createElement('a-marker');
+        marker.setAttribute('type', 'pattern');
+        marker.setAttribute('preset', 'custom');
+        marker.setAttribute('url', '../assets/Marker.patt');
+        marker.setAttribute('ar-tracking', 'color');
+
+        scene.appendChild(marker);
+
+        document.querySelector('#reader').remove();
+        document.querySelector('body').appendChild(scene);
 
         console.log(data);
         console.log(social);
