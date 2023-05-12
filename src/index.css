@@ -1,10 +1,22 @@
 #reader {
-    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    position: absolute !important;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
 }
 
-#switch-camera {
-    z-index: 2;
-    position: absolute;
-    bottom: 0;
-    right: 0;
+#reader__dashboard {
+    display: none !important;
+}
+
+#reader__scan_region {
+    height: 100vh;
+}
+
+#reader__scan_region>video {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
 }

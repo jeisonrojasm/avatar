@@ -28,24 +28,16 @@
 <body>
   <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
   <div id="reader"></div>
-  <script>
-    const qrBoxWidth = window.innerWidth / 2;
 
-    const html5QrcodeScanner = new Html5QrcodeScanner(
-      "reader", { fps: 10, qrbox: qrBoxWidth });
-
-    html5QrcodeScanner.render((result) => {
-      console.log(result);
-      alert(result);
-    });
-  </script>
-
-  <!-- <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
-    vr-mode-ui="enabled: false;" camera-rear>
-    <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking="color"></a-marker>
-  </a-scene> -->
+  <!-- <div style="display:none;">
+    <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; facingMode: environment; debugUIEnabled: false;" vr-mode-ui="enabled: false;" camera-rear>
+      <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking="color"></a-marker>
+    </a-scene>
+  </div> -->
 
   <script src="./src/index.js" type="module"></script>
+
+  <!-- <script src="./src/index.js" type="module"></script> -->
 </body>
 
 </html>
