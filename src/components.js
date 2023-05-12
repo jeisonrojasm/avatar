@@ -1,4 +1,4 @@
-import { boxImages } from "./index.js";
+import { boxImages } from "./ar.js";
 
 const socialNetworksArr = Object.keys(boxImages);
 const socialNetworks = socialNetworksArr.map(e => `https://www.${e}.com`);

@@ -7,13 +7,13 @@
     z-index: 0;
 }
 
-#reader__dashboard {
+/* #reader__dashboard {
     display: none !important;
-}
+} */
 
-#reader__scan_region {
+/* #reader__scan_region {
     height: 100vh;
-}
+} */
 
 #reader__scan_region>video {
     width: 100vw;

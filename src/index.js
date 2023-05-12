@@ -1,4 +1,4 @@
-const qrBoxWidth = window.innerWidth / 3;
+const qrBoxWidth = window.innerWidth / 2;
 
 const html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: qrBoxWidth });
 
@@ -8,7 +8,6 @@ let idAvatarLastLS = localStorage.setItem('idAvatarLast', '');
 
 html5QrcodeScanner.render((content) => {
     console.log(content);
-    alert(content);
 
     const lastIndexOfSlash = content.lastIndexOf('avatar=');
     const idAvatar = content.slice(lastIndexOfSlash + 7);
@@ -22,8 +21,7 @@ html5QrcodeScanner.render((content) => {
         console.log('Haciendo fetch...');
         localStorage.setItem('idAvatarLast', `${idAvatarCurrentLS}`);
 
-        getData(idAvatar).then((valor) => {
-            console.log('valor ', valor);
+        getData(idAvatar).then(() => {
             window.location.replace('./src/ar.html');
         });
     }
@@ -36,6 +34,7 @@ async function getData(idAvatar) {
         const response = await fetch(`https://main.d14z3n2zfezi4a.amplifyapp.com/api/avatars/${idAvatar}`);
         // const response = await fetch(`http://localhost:3001/avatars/${idAvatar}`);
         const data = await response.json();
+        localStorage.setItem('data', `${JSON.stringify(data)}`);
 
         const { social } = data;
         const { urlRPM } = data;
@@ -45,13 +44,11 @@ async function getData(idAvatar) {
         console.log(data);
         console.log(social);
         console.log(amountOfBoxes);
-        return dataExterna;
 
     } catch (error) {
         alert('Es posible que estés intentando escanear un código QR inválido. Asegúrate de intentar escanear un código QR válido e inténtalo de nuevo.');
     }
 }
-export { dataExterna };
 
 
 // const qrBoxWidth = window.innerWidth / 3;
@@ -82,51 +79,13 @@ export { dataExterna };
 //     }
 // });
 
-// const boxPositions = [
-//     {
-//         position1: '0.0 16.0 0.0'
-//     },
-//     {
-//         position1: '-1.0 16.0 0.0',
-//         position2: '1.0 16.0 0.0'
-//     },
-//     {
-//         position1: '-2 16.0 0.0',
-//         position2: '0.0 16.0 0.0',
-//         position3: '2 16.0 0.0'
-//     },
-//     {
-//         position1: '-3.0 16.0 0.0',
-//         position2: '-1.0 16.0 0.0',
-//         position3: '1.0 16.0 0.0',
-//         position4: '3.0 16.0 0.0'
-//     }
-// ];
 
-// const boxDimensions = {
-//     depth: '1.5',
-//     height: '1.5',
-//     width: '1.5'
-// };
 
-// const boxImagesPath = '../assets/images/';
 
-// export const boxImages = {
-//     Instagram: `${boxImagesPath}instagram.png`,
-//     Facebook: `${boxImagesPath}facebook.png`,
-//     Twitter: `${boxImagesPath}twitter.png`,
-//     WhatsApp: `${boxImagesPath}whatsapp.png`,
-//     LinkedIn: `${boxImagesPath}linkedin.png`,
-//     correo: `${boxImagesPath}correo.png`,
-//     Telegram: `${boxImagesPath}telegram.png`,
-//     Messenger: `${boxImagesPath}messenger.png`,
-//     Snapchat: `${boxImagesPath}snapchat.png`,
-//     Spotify: `${boxImagesPath}spotify.png`,
-//     Youtube: `${boxImagesPath}youtube.png`,
-//     Discord: `${boxImagesPath}discord.png`,
-//     Pinterest: `${boxImagesPath}pinterest.png`,
-//     TikTok: `${boxImagesPath}tiktok.png`
-// };
+
+
+
+
 
 // export let dataExterna = null;
 

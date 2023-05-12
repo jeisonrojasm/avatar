@@ -16,14 +16,16 @@
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.0/dist/aframe-extras.min.js"></script>
     <!-- Importar GLTFLoader para cargar archivos con extensión GLB y GLTF -->
     <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
+
+    <script src="./components.js" type="module"></script>
 </head>
 
 <body>
-    <div style="display:none;">
-        <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; facingMode: environment; debugUIEnabled: false;" vr-mode-ui="enabled: false;" camera-rear>
-            <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking="color"></a-marker>
-        </a-scene>
-    </div>
+    <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; facingMode: environment; debugUIEnabled: false;" vr-mode-ui="enabled: false;" camera-rear>
+        <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking="color"></a-marker>
+    </a-scene>
+
+    <script src="./ar.js" type="module"></script>
 </body>
 
 </html>
