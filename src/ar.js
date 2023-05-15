@@ -1,12 +1,18 @@
 const data = JSON.parse(localStorage.getItem('data'));
 console.log(data);
 
+console.log(window.location.href);
+
+window.addEventListener('beforeunload', () => {
+    console.log(window.location.href);
+});
+
 const marker = document.querySelector('a-marker');
 const scene = document.querySelector('a-scene');
 
 const deviceWidth = window.innerWidth;
 
-const boxPositions = [
+const boxPositionsDesktop = [
     {
         position1: '0.0 16.0 0.0'
     },
@@ -24,6 +30,27 @@ const boxPositions = [
         position2: '-1.0 16.0 0.0',
         position3: '1.0 16.0 0.0',
         position4: '3.0 16.0 0.0'
+    }
+];
+
+const boxPositionsMobile = [
+    {
+        position1: '0.0 8.0 0.0'
+    },
+    {
+        position1: '-1.0 8.0 0.0',
+        position2: '1.0 8.0 0.0'
+    },
+    {
+        position1: '-2 8.0 0.0',
+        position2: '0.0 8.0 0.0',
+        position3: '2 8.0 0.0'
+    },
+    {
+        position1: '-3.0 8.0 0.0',
+        position2: '-1.0 8.0 0.0',
+        position3: '1.0 8.0 0.0',
+        position4: '3.0 8.0 0.0'
     }
 ];
 
@@ -121,8 +148,15 @@ marker.addEventListener('markerFound', function () {
             socialName = 'correo';
         }
 
+        let positions;
+        if (deviceWidth < 500) {
+            positions = [...boxPositionsMobile];
+        } else {
+            positions = [...boxPositionsDesktop];
+        }
+
         const userName = social[i].identifier;
-        const box = createBox(socialName, boxPositions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width, userName);
+        const box = createBox(socialName, positions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width, userName);
 
         markerData[socialName] = box;
         marker.appendChild(box);
