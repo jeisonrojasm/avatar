@@ -5,14 +5,24 @@
     top: 0px;
     left: 0px;
     z-index: 0;
+    /* background: radial-gradient(circle at 50% 117%, #01c38d 0, #059d7b 10%, #097b6b 21%, #0d5e5d 34%, #0f4853 47%, #11394b 61%, #122f47 77%, #132d46 100%); */
 }
 
-/* #reader__dashboard {
-    display: none !important;
-} */
+/* button[type="button"] {
+    background-color: #bdbdbd;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+    background-color: #014fc3;
+    color: white;
+}
 
-/* #reader__scan_region {
-    height: 100vh;
+button[type="button"]:hover {
+    cursor: pointer;
+    background-color: #0466f8;
 } */
 
 #reader__scan_region>video {

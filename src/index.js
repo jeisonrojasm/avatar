@@ -1,12 +1,23 @@
-const qrBoxWidth = window.innerWidth / 2;
+let qrBoxWidth;
 
-const html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: qrBoxWidth });
+if (window.innerWidth < 300) {
+    qrBoxWidth = 150;
+} else if (window.innerWidth < 400) {
+    qrBoxWidth = 200;
+} else if (window.innerWidth < 500) {
+    qrBoxWidth = 250;
+} else if (window.innerWidth < 700) {
+    qrBoxWidth = 350;
+} else {
+    qrBoxWidth = 550;
+}
+const html5QrCode = new Html5Qrcode("reader");
 
 localStorage.setItem('idAvatarCurrent', '');
 let idAvatarCurrentLS = localStorage.getItem('idAvatarCurrent');
 let idAvatarLastLS = localStorage.setItem('idAvatarLast', '');
 
-html5QrcodeScanner.render((content) => {
+function onScanSuccess(content) {
     console.log(content);
 
     const lastIndexOfSlash = content.lastIndexOf('avatar=');
@@ -30,7 +41,10 @@ html5QrcodeScanner.render((content) => {
 
         getData(idAvatar);
     }
-});
+}
+
+html5QrCode.start({ facingMode: "environment" }, { fps: 10 }, onScanSuccess)
+    .catch((error) => console.log("Error al iniciar el escaneo:", error));
 
 let dataExterna;
 

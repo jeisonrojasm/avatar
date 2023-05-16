@@ -80,7 +80,7 @@ export const boxImages = {
 };
 
 const { social } = data;
-const { urlRPM } = data;
+const urlRPM = data.urlRPM + '?quality=low';
 const amountOfBoxes = social.length;
 
 console.log(social);
@@ -137,6 +137,7 @@ marker.addEventListener('markerFound', function () {
         marker.removeChild(marker.firstChild);
     }
     console.log('Marcador Encontrado');
+    console.log(urlRPM);
     const entity = createEntity(urlRPM);
     marker.appendChild(entity);
 
