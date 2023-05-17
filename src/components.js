@@ -2,7 +2,6 @@ import { boxImages } from "./ar.js";
 
 const socialNetworksArr = Object.keys(boxImages);
 const socialNetworks = socialNetworksArr.map(e => `https://www.${e}.com`);
-console.log(socialNetworks);
 
 AFRAME.registerComponent('handle-click-social-network', {
 

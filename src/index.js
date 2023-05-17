@@ -18,7 +18,6 @@ let idAvatarCurrentLS = localStorage.getItem('idAvatarCurrent');
 let idAvatarLastLS = localStorage.setItem('idAvatarLast', '');
 
 function onScanSuccess(content) {
-    console.log(content);
 
     const lastIndexOfSlash = content.lastIndexOf('avatar=');
     const idAvatar = content.slice(lastIndexOfSlash + 7);
@@ -49,8 +48,6 @@ function onScanSuccess(content) {
 html5QrCode.start({ facingMode: "environment" }, { fps: 10 }, onScanSuccess)
     .catch((error) => console.log("Error al iniciar el escaneo:", error));
 
-let dataExterna;
-
 async function getData(idAvatar) {
     try {
         const response = await fetch(`https://main.d14z3n2zfezi4a.amplifyapp.com/api/avatars/${idAvatar}`);
@@ -58,18 +55,10 @@ async function getData(idAvatar) {
         const data = await response.json();
         localStorage.setItem('data', `${JSON.stringify(data)}`);
 
-        const { social } = data;
-        const { urlRPM } = data;
-        dataExterna = data;
-        const amountOfBoxes = social.length;
-
-        console.log(data);
-        console.log(social);
-        console.log(amountOfBoxes);
         window.location.href = './src/ar.html';
 
     } catch (error) {
-        alert('Es posible que estés intentando escanear un código QR inválido. Asegúrate de intentar escanear un código QR válido e inténtalo de nuevo.');
+        alert('Es posible que estés intentando escanear un código QR NO válido. Asegúrate de intentar escanear un código QR válido e inténtalo de nuevo.');
         window.location.href = './index.html';
     }
 };

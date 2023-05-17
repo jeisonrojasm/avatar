@@ -1,11 +1,4 @@
 const data = JSON.parse(localStorage.getItem('data'));
-console.log(data);
-
-console.log(window.location.href);
-
-window.addEventListener('beforeunload', () => {
-    console.log(window.location.href);
-});
 
 const marker = document.querySelector('a-marker');
 const scene = document.querySelector('a-scene');
@@ -83,9 +76,6 @@ const { social } = data;
 const urlRPM = data.urlRPM + '?quality=low';
 const amountOfBoxes = social.length;
 
-console.log(social);
-console.log(amountOfBoxes);
-
 // MÉTODOS
 const createCamera = () => {
     const camera = document.createElement('a-camera');
@@ -94,7 +84,6 @@ const createCamera = () => {
     camera.setAttribute('position', '0 0 0');
     camera.setAttribute('fov', '45');
     camera.setAttribute('look-controls-enabled', 'false');
-    // camera.setAttribute('facingMode', 'environment');
     camera.setAttribute('user-controls', '');
 
     scene.appendChild(camera);
@@ -136,12 +125,10 @@ marker.addEventListener('markerFound', function () {
     while (marker.firstChild) {
         marker.removeChild(marker.firstChild);
     }
-    console.log('Marcador Encontrado');
-    console.log(urlRPM);
+
     const entity = createEntity(urlRPM);
     marker.appendChild(entity);
 
-    const position = 0
     for (let i = 0; i < amountOfBoxes; i++) {
         let socialName = social[i].name;
 
