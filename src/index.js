@@ -33,7 +33,10 @@ function onScanSuccess(content) {
         modal.innerText = 'Trayendo avatar...';
         modal.setAttribute('id', 'modal');
 
-        document.querySelector('body').appendChild(modal);
+        document.querySelector('#scan-frame-container').remove();
+        const body = document.querySelector('body');
+
+        body.insertBefore(modal, body.firstChild);
 
         document.querySelector('#reader').classList.add('readerBlack');
 
