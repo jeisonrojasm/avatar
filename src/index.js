@@ -46,7 +46,7 @@ function onScanSuccess(content) {
 }
 
 html5QrCode.start({ facingMode: "environment" }, { fps: 10 }, onScanSuccess)
-    .catch((error) => console.log("Error al iniciar el escaneo:", error));
+    .catch((error) => alert(`${error}\n\nLínea 49`));
 
 async function getData(idAvatar) {
     try {
@@ -58,7 +58,7 @@ async function getData(idAvatar) {
         window.location.href = './src/ar.html';
 
     } catch (error) {
-        alert('Es posible que estés intentando escanear un código QR NO válido. Asegúrate de intentar escanear un código QR válido e inténtalo de nuevo.');
+        alert(`${error} \n\nEs posible que estés intentando escanear un código QR NO válido. Asegúrate de intentar escanear un código QR válido e inténtalo de nuevo.`);
         window.location.href = './index.html';
     }
 };

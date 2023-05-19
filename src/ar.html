@@ -9,22 +9,21 @@
     <title>AR-AvatarQR</title>
 
     <!-- Importar Aframe (Biblioteca de Realidad Virtual basada en THREE.js)-->
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <!-- Importar ARjs (Biblioteca de Realidad Aumentada)-->
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <!-- Importar Aframe Extras para que las animaciones de objetos 3D funcionen -->
-    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
     <!-- Importar GLTFLoader para cargar archivos con extensión GLB y GLTF -->
-    <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/browse/three@0.152.2/examples/jsm/loaders/GLTFLoader.js"></script>
 
     <script src="./components.js" type="module"></script>
 </head>
 
 <body>
-    <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; facingMode: environment; debugUIEnabled: false;" vr-mode-ui="enabled: false;">
-        <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking="color"></a-marker>
+    <a-scene id="scene" cursor="rayOrigin: mouse" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false;" loading-screen="enabled: false;" renderer="logarithmicDepthBuffer: true;">
+        <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking="image"></a-marker>
     </a-scene>
-
     <script src="./ar.js" type="module"></script>
 </body>
 
