@@ -28,22 +28,22 @@ const boxPositionsDesktop = [
 
 const boxPositionsMobile = [
     {
-        position1: '0.0 0.0 3.0'
+        position1: '0.0 0.0 4.0'
     },
     {
-        position1: '-1.0 0.0 3.0',
-        position2: '1.0 0.0 3.0'
+        position1: '-1.0 0.0 4.0',
+        position2: '1.0 0.0 4.0'
     },
     {
-        position1: '-2 0.0 3.0',
-        position2: '0.0 0.0 3.0',
-        position3: '2 0.0 3.0'
+        position1: '-2 0.0 4.0',
+        position2: '0.0 0.0 4.0',
+        position3: '2 0.0 4.0'
     },
     {
-        position1: '-3.0 0.0 3.0',
-        position2: '-1.0 0.0 3.0',
-        position3: '1.0 0.0 3.0',
-        position4: '3.0 0.0 3.0'
+        position1: '-3.0 0.0 4.0',
+        position2: '-1.0 0.0 4.0',
+        position3: '1.0 0.0 4.0',
+        position4: '3.0 0.0 4.0'
     }
 ];
 
@@ -93,7 +93,7 @@ const createEntity = (content) => {
     const entity = document.createElement("a-entity");
     entity.setAttribute('position', '0.0 0.0 0.0');
     if (deviceWidth < 500) {
-        entity.setAttribute('scale', `3 1.5 1.5`);
+        entity.setAttribute('scale', `3 2 1.5`);
     } else {
         entity.setAttribute('scale', `3 3 3`);
     }
