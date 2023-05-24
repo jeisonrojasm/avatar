@@ -17,7 +17,13 @@ localStorage.setItem('idAvatarCurrent', '');
 let idAvatarCurrentLS = localStorage.getItem('idAvatarCurrent');
 let idAvatarLastLS = localStorage.setItem('idAvatarLast', '');
 
+const progressBar = document.getElementById('progress');
+const progressBarContainer = document.getElementById('progress-bar-container');
+
 function onScanSuccess(content) {
+    document.querySelector('#scan-frame-container').classList.add('hidden');
+    progressBarContainer.classList.remove('hidden');
+    progressBarContainer.classList.add('progress-bar-container-shown');
 
     const lastIndexOfSlash = content.lastIndexOf('avatar=');
     const idAvatar = content.slice(lastIndexOfSlash + 7);
@@ -38,19 +44,26 @@ function onScanSuccess(content) {
         // body.insertBefore(modal, body.firstChild);
 
         // document.querySelector('#reader').classList.add('readerBlack');
-
-        console.log('Cargando...');
+        progressBar.style.width = 10 + '%';
 
         localStorage.setItem('idAvatarLast', `${idAvatarCurrentLS}`);
 
-        getData(idAvatar);
+        setTimeout(() => {
+            for (let i = 1; i < 4; i++) {
+                progressBar.style.width = (i * 10) + '%';
+                if (i === 3) {
+                    getData(idAvatar);
+                }
+            }
+        }, 2000);
+
     }
 }
 
 html5QrCode.start({ facingMode: "environment" }, { fps: 10 }, onScanSuccess)
     .catch((error) => alert(`${error}\n\nLínea 49`));
 
-const progressBar = document.getElementById('progress');
+
 
 async function getData(idAvatar) {
     try {
@@ -67,8 +80,11 @@ async function getData(idAvatar) {
         const reader = response.body.getReader();
         let receivedBytes = 0;
 
+
         while (true) {
-            const { done, value } = await reader.read();
+
+            const lector = await reader.read();
+            const { done, value } = lector;
 
             if (done) {
                 break;

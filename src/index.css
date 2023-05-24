@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../assets/fonts/Ubuntu/Ubuntu-Regular.ttf') format('truetype');
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -73,4 +78,44 @@ body {
 
 .readerBlack {
     opacity: 0.3;
+}
+
+#progress-bar-container {
+    position: absolute;
+    z-index: 2;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100vh;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.progress-bar-container-shown {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#progress-bar-text {
+    font-size: 30px;
+    color: white;
+    text-shadow: 2px 2px 5px #000000;
+    font-family: 'Ubuntu';
+}
+
+#progress-bar {
+    width: 80%;
+    border-radius: 10px;
+    background-color: lightgray;
+    height: 20px;
+}
+
+#progress {
+    border-radius: 10px;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(30deg, rgba(1, 195, 141, 1) 0%, rgba(19, 45, 70, 1) 82%);
 }

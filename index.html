@@ -19,37 +19,17 @@
   <script src="https://unpkg.com/browse/three@0.152.2/examples/jsm/loaders/GLTFLoader.js"></script>
   <!-- Importar Html5QrCode para escanear códigos QR -->
   <script src="https://unpkg.com/html5-qrcode@latest"></script>
-  
+
   <script src="./src/components.js" type="module"></script>
   <style>
-    #progress-bar-container {
-      position: absolute;
-      z-index: 2;
-      width: 50%;
-      background: radial-gradient(circle at 50% 117%, #01c38d 0, #059d7b 10%, #097b6b 21%, #0d5e5d 34%, #0f4853 47%, #11394b 61%, #122f47 77%, #132d46 100%);
-      height: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #progress-bar {
-      width: 80%;
-      background-color: lightgray;
-      height: 20px;
-    }
-
-    #progress {
-      width: 0%;
-      height: 100%;
-      background-color: rgb(7, 66, 230);
-    }
+    
   </style>
 </head>
 
 <body>
   <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
-  <div id="progress-bar-container">
+  <div id="progress-bar-container" class="hidden">
+    <p id="progress-bar-text">Cargando avatar...</p>
     <div id="progress-bar">
       <div id="progress"></div>
     </div>
