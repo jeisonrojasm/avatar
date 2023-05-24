@@ -28,16 +28,18 @@ function onScanSuccess(content) {
 
     if (idAvatarCurrentLS !== idAvatarLastLS) {
 
-        const modal = document.createElement('div');
-        modal.innerText = 'Trayendo avatar...';
-        modal.setAttribute('id', 'modal');
+        // const modal = document.createElement('div');
+        // modal.innerText = 'Trayendo avatar...';
+        // modal.setAttribute('id', 'modal');
 
-        document.querySelector('#scan-frame-container').remove();
-        const body = document.querySelector('body');
+        // document.querySelector('#scan-frame-container').remove();
+        // const body = document.querySelector('body');
 
-        body.insertBefore(modal, body.firstChild);
+        // body.insertBefore(modal, body.firstChild);
 
-        document.querySelector('#reader').classList.add('readerBlack');
+        // document.querySelector('#reader').classList.add('readerBlack');
+
+        console.log('Cargando...');
 
         localStorage.setItem('idAvatarLast', `${idAvatarCurrentLS}`);
 
@@ -48,11 +50,35 @@ function onScanSuccess(content) {
 html5QrCode.start({ facingMode: "environment" }, { fps: 10 }, onScanSuccess)
     .catch((error) => alert(`${error}\n\nLínea 49`));
 
+const progressBar = document.getElementById('progress');
+
 async function getData(idAvatar) {
     try {
         const response = await fetch(`https://main.d14z3n2zfezi4a.amplifyapp.com/api/avatars/${idAvatar}`);
-        // const response = await fetch(`http://localhost:3001/avatars/${idAvatar}`);
-        const data = await response.json();
+        const totalBytes = response.headers.get('content-length');
+
+        if (!totalBytes) {
+            console.error('No se pudo obtener el tamaño total de la respuesta de la API.');
+            return;
+        }
+
+        const data = await response.clone().json(); // Almacenar el cuerpo de la respuesta
+
+        const reader = response.body.getReader();
+        let receivedBytes = 0;
+
+        while (true) {
+            const { done, value } = await reader.read();
+
+            if (done) {
+                break;
+            }
+
+            receivedBytes += value.length;
+            const percentComplete = (receivedBytes / totalBytes) * 100;
+            progressBar.style.width = percentComplete + '%';
+        }
+
         localStorage.setItem('data', `${JSON.stringify(data)}`);
 
         window.location.href = './src/ar.html';
