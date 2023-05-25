@@ -33,17 +33,6 @@ function onScanSuccess(content) {
     idAvatarLastLS = localStorage.getItem('idAvatarLast');
 
     if (idAvatarCurrentLS !== idAvatarLastLS) {
-
-        // const modal = document.createElement('div');
-        // modal.innerText = 'Trayendo avatar...';
-        // modal.setAttribute('id', 'modal');
-
-        // document.querySelector('#scan-frame-container').remove();
-        // const body = document.querySelector('body');
-
-        // body.insertBefore(modal, body.firstChild);
-
-        // document.querySelector('#reader').classList.add('readerBlack');
         progressBar.style.width = 10 + '%';
 
         localStorage.setItem('idAvatarLast', `${idAvatarCurrentLS}`);
@@ -56,14 +45,11 @@ function onScanSuccess(content) {
                 }
             }
         }, 2000);
-
     }
 }
 
 html5QrCode.start({ facingMode: "environment" }, { fps: 10 }, onScanSuccess)
-    .catch((error) => alert(`${error}\n\nLínea 49`));
-
-
+    .catch((error) => alert(`${error}`));
 
 async function getData(idAvatar) {
     try {
@@ -80,9 +66,7 @@ async function getData(idAvatar) {
         const reader = response.body.getReader();
         let receivedBytes = 0;
 
-
         while (true) {
-
             const lector = await reader.read();
             const { done, value } = lector;
 
@@ -100,7 +84,8 @@ async function getData(idAvatar) {
         window.location.href = './src/ar.html';
 
     } catch (error) {
-        alert(`${error} \n\nEs posible que estés intentando escanear un código QR NO válido. Asegúrate de intentar escanear un código QR válido e inténtalo de nuevo.`);
+        console.log(error);
+        alert(`Es posible que estés intentando escanear un código QR NO válido. Asegúrate de intentar escanear un código QR válido e inténtalo de nuevo.`);
         window.location.href = './index.html';
     }
 };

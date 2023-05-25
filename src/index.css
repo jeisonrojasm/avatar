@@ -56,30 +56,6 @@ body {
     object-fit: cover;
 }
 
-#modal {
-    z-index: 3;
-    position: relative;
-    width: 80vw;
-    height: 50vh;
-    background: radial-gradient(circle at 50% 117%, #01c38d 0, #059d7b 10%, #097b6b 21%, #0d5e5d 34%, #0f4853 47%, #11394b 61%, #122f47 77%, #132d46 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 50px;
-    color: white;
-}
-
-@media (max-width: 500px) {
-    #modal {
-        font-size: 25px;
-    }
-}
-
-.readerBlack {
-    opacity: 0.3;
-}
-
 #progress-bar-container {
     position: absolute;
     z-index: 2;
@@ -117,5 +93,5 @@ body {
     border-radius: 10px;
     width: 0%;
     height: 100%;
-    background: linear-gradient(30deg, rgba(1, 195, 141, 1) 0%, rgba(19, 45, 70, 1) 82%);
+    background: linear-gradient(30deg, #01c38d 0%, #132d46 82%);
 }

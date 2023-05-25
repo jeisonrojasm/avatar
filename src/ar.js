@@ -156,4 +156,3 @@ marker.addEventListener('markerLost', function () {
         marker.removeChild(marker.firstChild);
     }
 });
-
