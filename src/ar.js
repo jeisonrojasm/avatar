@@ -7,50 +7,50 @@ const deviceWidth = window.innerWidth;
 
 const boxPositionsDesktop = [
     {
-        position1: '0.0 0.0 6.0'
+        position1: '0.0 0.0 1.0'
     },
     {
-        position1: '-1.0 0.0 6.0',
-        position2: '1.0 0.0 6.0'
+        position1: '-1.0 0.0 1.0',
+        position2: '1.0 0.0 1.0'
     },
     {
-        position1: '-2 0.0 6.0',
-        position2: '0.0 0.0 6.0',
-        position3: '2 0.0 6.0'
+        position1: '-2 0.0 1.0',
+        position2: '0.0 0.0 1.0',
+        position3: '2 0.0 1.0'
     },
     {
-        position1: '-3.0 0.0 6.0',
-        position2: '-1.0 0.0 6.0',
-        position3: '1.0 0.0 6.0',
-        position4: '3.0 0.0 6.0'
+        position1: '-3.0 0.0 1.0',
+        position2: '-1.0 0.0 1.0',
+        position3: '1.0 0.0 1.0',
+        position4: '3.0 0.0 1.0'
     }
 ];
 
 const boxPositionsMobile = [
     {
-        position1: '0.0 0.0 4.0'
+        position1: '0.0 0.0 0.4'
     },
     {
-        position1: '-1.0 0.0 4.0',
-        position2: '1.0 0.0 4.0'
+        position1: '-0.5 0.0 0.4',
+        position2: '0.5 0.0 0.4'
     },
     {
-        position1: '-2 0.0 4.0',
-        position2: '0.0 0.0 4.0',
-        position3: '2 0.0 4.0'
+        position1: '-2 0.0 0.4',
+        position2: '0.0 0.0 0.4',
+        position3: '2 0.0 0.4'
     },
     {
-        position1: '-3.0 0.0 4.0',
-        position2: '-1.0 0.0 4.0',
-        position3: '1.0 0.0 4.0',
-        position4: '3.0 0.0 4.0'
+        position1: '-3.0 0.0 0.4',
+        position2: '-1.0 0.0 0.4',
+        position3: '1.0 0.0 0.4',
+        position4: '3.0 0.0 0.4'
     }
 ];
 
 const boxDimensions = {
-    depth: '1.5',
-    height: '1.5',
-    width: '1.5'
+    depth: '0.25',
+    height: '0.25',
+    width: '0.25'
 };
 
 const boxImagesPath = '../assets/images/';
@@ -91,11 +91,14 @@ const createCamera = () => {
 
 const createEntity = (content) => {
     const entity = document.createElement("a-entity");
-    entity.setAttribute('position', '0.0 0.0 0.0');
+    entity.setAttribute('position', '0.0 0.0 -0.5');
+    entity.setAttribute('rotation', '0 90 0');
     if (deviceWidth < 500) {
-        entity.setAttribute('scale', `3 2 1.5`);
+        // entity.setAttribute('scale', `3 2 1.5`);
+        entity.setAttribute('scale', `0.4 0.5 0.2`);
     } else {
-        entity.setAttribute('scale', `3 3 3`);
+        // entity.setAttribute('scale', `3 3 3`);
+        entity.setAttribute('scale', `0.7 0.8 0.5`);
     }
     entity.setAttribute('modelo-gltf', content);
     entity.setAttribute('animation-mixer', '');
