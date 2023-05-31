@@ -92,7 +92,7 @@ const createCamera = () => {
 const createEntity = (content) => {
     const entity = document.createElement("a-entity");
     entity.setAttribute('position', '0.0 0.0 -0.5');
-    entity.setAttribute('rotation', '0 90 0');
+    entity.setAttribute('rotation', '0 0 0');
     if (deviceWidth < 500) {
         // entity.setAttribute('scale', `3 2 1.5`);
         entity.setAttribute('scale', `0.4 0.5 0.2`);
