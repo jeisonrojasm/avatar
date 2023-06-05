@@ -80,7 +80,8 @@ AFRAME.registerComponent("modelo-gltf", {
             loaderAnimacion.load(animations[animationToLoad], function (animacion) {
                 loaderModelo.load(t, function (modelo) {
 
-                    modelo.scene.scale.set(2.5, 2.5, 2.5);
+                    modelo.scene.scale.set(2.0, 2.0, 2.0);
+                    modelo.scene.rotation.x += -1.5
 
                     for (let i = 0; i < animacion.animations[0].tracks.length; i++) {
                         const str = animacion.animations[0].tracks[i].name;

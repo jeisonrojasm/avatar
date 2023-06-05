@@ -7,50 +7,50 @@ const deviceWidth = window.innerWidth;
 
 const boxPositionsDesktop = [
     {
-        position1: '0.0 0.0 0.8'
+        position1: '0.0 0.0 1.0'
     },
     {
-        position1: '-0.5 0.0 0.8',
-        position2: '0.5 0.0 0.8'
+        position1: '-0.5 0.0 1.0',
+        position2: '0.5 0.0 1.0'
     },
     {
-        position1: '-1 0.0 0.8',
-        position2: '0.0 0.0 0.8',
-        position3: '1 0.0 0.8'
+        position1: '-1 0.0 1.0',
+        position2: '0.0 0.0 1.0',
+        position3: '1 0.0 1.0'
     },
     {
-        position1: '-1.5 0.0 0.8',
-        position2: '-0.5 0.0 0.8',
-        position3: '0.5 0.0 0.8',
-        position4: '1.5 0.0 0.8'
+        position1: '-1.5 0.0 1.0',
+        position2: '-0.5 0.0 1.0',
+        position3: '0.5 0.0 1.0',
+        position4: '1.5 0.0 1.0'
     }
 ];
 
 const boxPositionsMobile = [
     {
-        position1: '0.0 0.0 0.8'
+        position1: '0.0 0.0 1.1'
     },
     {
-        position1: '-0.5 0.0 0.8',
-        position2: '0.5 0.0 0.8'
+        position1: '-0.5 0.0 1.1',
+        position2: '0.5 0.0 1.1'
     },
     {
-        position1: '-1 0.0 0.8',
-        position2: '0.0 0.0 0.8',
-        position3: '1 0.0 0.8'
+        position1: '-1 0.0 1.1',
+        position2: '0.0 0.0 1.1',
+        position3: '1 0.0 1.1'
     },
     {
-        position1: '-1.5 0.0 0.8',
-        position2: '-0.5 0.0 0.8',
-        position3: '0.5 0.0 0.8',
-        position4: '1.5 0.0 0.8'
+        position1: '-1.5 0.0 1.1',
+        position2: '-0.5 0.0 1.1',
+        position3: '0.5 0.0 1.1',
+        position4: '1.5 0.0 1.1'
     }
 ];
 
 const boxDimensions = {
-    depth: '0.4',
-    height: '0.4',
-    width: '0.4'
+    depth: '0.5',
+    height: '0.5',
+    width: '0.5'
 };
 
 const boxImagesPath = '../assets/images/';
@@ -91,7 +91,7 @@ const createCamera = () => {
 
 const createEntity = (content) => {
     const entity = document.createElement("a-entity");
-    entity.setAttribute('position', '0.0 0.0 -0.5');
+    entity.setAttribute('position', '0.0 0.0 0.3');
     entity.setAttribute('rotation', '0 0 0');
     if (deviceWidth < 500) {
         // ancho, frente, alto
