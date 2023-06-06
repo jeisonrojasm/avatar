@@ -48,7 +48,7 @@ function onScanSuccess(content) {
     }
 }
 
-html5QrCode.start({ facingMode: "environment" }, { fps: 10 }, onScanSuccess)
+html5QrCode.start({ facingMode: "environment" }, { fps: 30 }, onScanSuccess)
     .catch((error) => alert(`${error}`));
 
 async function getData(idAvatar) {
