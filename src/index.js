@@ -68,7 +68,8 @@ html5QrCode.start({ facingMode: "environment" }, configuration, onScanSuccess)
 
 async function getData(idAvatar) {
     try {
-        const response = await fetch(`https://main.d14z3n2zfezi4a.amplifyapp.com/api/avatars/${idAvatar}`);
+        // const response = await fetch(`https://main.d14z3n2zfezi4a.amplifyapp.com/api/avatars/${idAvatar}`);
+        const response = await fetch(`https://main.d1emaii8t4nv7o.amplifyapp.com/api/avatars/${idAvatar}`);
         const totalBytes = response.headers.get('content-length');
 
         if (!totalBytes) {
