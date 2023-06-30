@@ -49,7 +49,7 @@ const boxPositionsMobile = [
 
 const boxDimensions = {
     depth: '0.5',
-    height: '0.5',
+    height: '0.0',
     width: '0.5'
 };
 
@@ -96,7 +96,7 @@ const createEntity = (content) => {
     if (deviceWidth < 500) {
         // ancho, frente, alto
         // entity.setAttribute('scale', `3 2 1.5`);
-        entity.setAttribute('scale', `0.8 0.6 0.3`);
+        entity.setAttribute('scale', `0.8 0.6 0.2`);
     } else {
         // entity.setAttribute('scale', `3 3 3`);
         entity.setAttribute('scale', `0.7 0.8 0.5`);
@@ -112,7 +112,7 @@ const createBox = (boxId, boxPosition, boxMaterial, depth, height, width, userna
     box.setAttribute('id', boxId);
     box.setAttribute('position', boxPosition);
     box.setAttribute('color', 'white');
-    box.setAttribute('material', `src:${boxMaterial}`);
+    box.setAttribute('material', `src:${boxMaterial}; transparent: true;`);
     box.setAttribute('depth', depth);
     box.setAttribute('height', height);
     box.setAttribute('width', width);
