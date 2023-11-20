@@ -72,8 +72,10 @@ export const boxImages = {
     TikTok: `${boxImagesPath}tiktok.png`
 };
 
-const { social } = data;
-const urlRPM = data.urlRPM + '?quality=low';
+const { social } = data; //[]
+// const urlRPM = data.urlRPM + '?quality=low';
+const urlRPM = data.urlGLB;
+console.log(urlRPM);
 const amountOfBoxes = social.length;
 
 // MÉTODOS

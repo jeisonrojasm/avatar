@@ -25,10 +25,11 @@ function onScanSuccess(content) {
     progressBarContainer.classList.remove('hidden');
     progressBarContainer.classList.add('progress-bar-container-shown');
 
-    const lastIndexOfSlash = content.lastIndexOf('avatar=');
-    const idAvatar = content.slice(lastIndexOfSlash + 7);
+    const lastIndexOfSlash = content.lastIndexOf('user=');
+    const idUser = content.slice(lastIndexOfSlash + 5);
+    console.log(idUser);
 
-    localStorage.setItem('idAvatarCurrent', `${idAvatar}`);
+    localStorage.setItem('idAvatarCurrent', `${idUser}`);
     idAvatarCurrentLS = localStorage.getItem('idAvatarCurrent');
     idAvatarLastLS = localStorage.getItem('idAvatarLast');
 
@@ -41,7 +42,7 @@ function onScanSuccess(content) {
             for (let i = 1; i < 4; i++) {
                 progressBar.style.width = (i * 10) + '%';
                 if (i === 3) {
-                    getData(idAvatar);
+                    getData(idUser);
                 }
             }
         }, 2000);
@@ -66,10 +67,11 @@ html5QrCode.start({ facingMode: "environment" }, configuration, onScanSuccess)
 // html5QrCode.start({ facingMode: "environment" }, { fps: 30 }, onScanSuccess)
 //     .catch((error) => alert(`${error}`));
 
-async function getData(idAvatar) {
+async function getData(idUser) {
     try {
         // const response = await fetch(`https://main.d14z3n2zfezi4a.amplifyapp.com/api/avatars/${idAvatar}`);
-        const response = await fetch(`https://main.d1emaii8t4nv7o.amplifyapp.com/api/avatars/${idAvatar}`);
+        // const response = await fetch(`https://main.d1emaii8t4nv7o.amplifyapp.com/api/avatars/${idAvatar}`);
+        const response = await fetch(`https://us9pagllek.execute-api.us-east-1.amazonaws.com/prod/avatars/users/${idUser}/shared`);
         const totalBytes = response.headers.get('content-length');
 
         if (!totalBytes) {
@@ -78,6 +80,7 @@ async function getData(idAvatar) {
         }
 
         const data = await response.clone().json(); // Almacenar el cuerpo de la respuesta
+        console.log(data);
 
         const reader = response.body.getReader();
         let receivedBytes = 0;
