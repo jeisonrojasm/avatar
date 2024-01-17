@@ -11,7 +11,7 @@ AFRAME.registerComponent('handle-click-social-network', {
             const username = e.target.getAttribute('username');
             for (let i = 0; i < socialNetworksArr.length; i++) {
                 if (socialNetwork === socialNetworksArr[i]) {
-                    if (socialNetwork === 'Linkedin') {
+                    if (socialNetwork === 'LinkedIn') {
                         window.open(`${socialNetworks[i]}/in/${username}`);
                     } else if (socialNetwork === 'Telegram') {
                         window.open(`https://t.me/${username}`);
@@ -23,12 +23,12 @@ AFRAME.registerComponent('handle-click-social-network', {
                         window.open(`https://www.snapchat.com/add/${username}`);
                     } else if (socialNetwork === 'Spotify') {
                         window.open(`https://open.spotify.com/user/${username}`);
-                    } else if (socialNetwork === 'correo') {
+                    } else if (socialNetwork === 'Correo') {
                         const subject = "Asunto del correo";
                         const body = "Cuerpo del correo";
                         const mailtoUrl = `mailto:${username}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                         window.open(mailtoUrl);
-                    } else if (socialNetwork === 'Tiktok') {
+                    } else if (socialNetwork === 'TikTok') {
                         window.open(`https://www.tiktok.com/@${username}`);
                     } else if (socialNetwork === 'Discord') {
                         window.open(`https://discord.gg/${username}`);

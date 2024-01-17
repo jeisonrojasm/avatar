@@ -61,7 +61,7 @@ export const boxImages = {
     Twitter: `${boxImagesPath}twitter.png`,
     WhatsApp: `${boxImagesPath}whatsapp.png`,
     LinkedIn: `${boxImagesPath}linkedin.png`,
-    correo: `${boxImagesPath}correo.png`,
+    Correo: `${boxImagesPath}correo.png`,
     Telegram: `${boxImagesPath}telegram.png`,
     Messenger: `${boxImagesPath}messenger.png`,
     Snapchat: `${boxImagesPath}snapchat.png`,
