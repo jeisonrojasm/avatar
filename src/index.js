@@ -72,7 +72,13 @@ async function getData(idUser) {
         // const response = await fetch(`https://main.d14z3n2zfezi4a.amplifyapp.com/api/avatars/${idAvatar}`);
         // const response = await fetch(`https://main.d1emaii8t4nv7o.amplifyapp.com/api/avatars/${idAvatar}`);
         // const response = await fetch(`https://us9pagllek.execute-api.us-east-1.amazonaws.com/prod/avatars/users/${idUser}/shared`);
+
+        // Endpoint Lean Factory
         const response = await fetch(`https://vhka48mki4.execute-api.us-east-1.amazonaws.com/prod/avatars/users/${idUser}/shared`);
+
+        // Endpoint IDI
+        // const response = await fetch(`https://main.d31t6gzplc5mtr.amplifyapp.com/api/avatars/${idUser}`);
+
         const totalBytes = response.headers.get('content-length');
 
         if (!totalBytes) {
