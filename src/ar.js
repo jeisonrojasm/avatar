@@ -7,50 +7,56 @@ const deviceWidth = window.innerWidth;
 
 const boxPositionsDesktop = [
     {
-        position1: '0.0 0.0 1.0'
+        position1: '0.0 -1.6 -5.0'
     },
     {
-        position1: '-0.5 0.0 1.0',
-        position2: '0.5 0.0 1.0'
+        position1: '-0.5 -1.6 -5.0',
+        position2: '0.5 -1.6 -5.0'
     },
     {
-        position1: '-1 0.0 1.0',
-        position2: '0.0 0.0 1.0',
-        position3: '1 0.0 1.0'
+        position1: '-1 -1.6 -5.0',
+        position2: '0.0 -1.6 -5.0',
+        position3: '1 -1.6 -5.0'
     },
     {
-        position1: '-1.5 0.0 1.0',
-        position2: '-0.5 0.0 1.0',
-        position3: '0.5 0.0 1.0',
-        position4: '1.5 0.0 1.0'
+        position1: '-1.5 -1.6 -5.0',
+        position2: '-0.5 -1.6 -5.0',
+        position3: '0.5 -1.6 -5.0',
+        position4: '1.5 -1.6 -5.0'
     }
 ];
 
 const boxPositionsMobile = [
     {
-        position1: '0.0 0.0 1.1'
+        position1: '0.0 -1.4 -5.0'
     },
     {
-        position1: '-0.5 0.0 1.1',
-        position2: '0.5 0.0 1.1'
+        position1: '-0.5 -1.4 -5.0',
+        position2: '0.5 -1.4 -5.0'
     },
     {
-        position1: '-1 0.0 1.1',
-        position2: '0.0 0.0 1.1',
-        position3: '1 0.0 1.1'
+        position1: '-1 -1.4 -5.0',
+        position2: '0.0 -1.4 -5.0',
+        position3: '1 -1.4 -5.0'
     },
     {
-        position1: '-1.5 0.0 1.1',
-        position2: '-0.5 0.0 1.1',
-        position3: '0.5 0.0 1.1',
-        position4: '1.5 0.0 1.1'
+        position1: '-1.5 -1.4 -5.0',
+        position2: '-0.5 -1.4 -5.0',
+        position3: '0.5 -1.4 -5.0',
+        position4: '1.5 -1.4 -5.0'
     }
 ];
 
-const boxDimensions = {
-    depth: '0.5',
-    height: '0.0',
-    width: '0.5'
+const boxDimensionsDesktop = {
+    depth: '0.25',
+    height: '0.25',
+    width: '0.25'
+};
+
+const boxDimensionsMobile = {
+    depth: '0.25',
+    height: '0.25',
+    width: '0.6'
 };
 
 const boxImagesPath = '../assets/images/';
@@ -72,9 +78,12 @@ export const boxImages = {
     TikTok: `${boxImagesPath}tiktok.png`
 };
 
-const { social } = data; //[]
+const { social, name } = data; //[]
 // const urlRPM = data.urlRPM + '?quality=low';
-const urlRPM = data.urlGLB;
+
+// Pruebas con modelo de alta calidad
+const urlRPM = 'https://models.readyplayer.me/6596aa0586bea20eae21c2a4.glb?quality=high&textureQuality=high&textureSizeLimit=1024';
+// const urlRPM = data.urlGLB;
 console.log(urlRPM);
 const amountOfBoxes = social.length;
 
@@ -91,21 +100,27 @@ const createCamera = () => {
     scene.appendChild(camera);
 };
 
+const createText = (text) => {
+    const aText = document.createElement("a-text");
+    aText.setAttribute('font', 'https://cdn.aframe.io/fonts/Monoid.fnt');
+    aText.setAttribute('value', `${text}`);
+    aText.setAttribute('color', 'white');
+    aText.setAttribute('align', 'center');
+
+    if (deviceWidth > 500) {
+        aText.setAttribute('position', '0 1.5 -5');
+        aText.setAttribute('scale', '0.6 0.6 0.6');
+    } else {
+        aText.setAttribute('position', '0 1.3 -5');
+        aText.setAttribute('scale', '2 0.8 1');
+    }
+    return aText;
+}
+
 const createEntity = (content) => {
     const entity = document.createElement("a-entity");
-    entity.setAttribute('position', '0.0 0.0 0.3');
-    entity.setAttribute('rotation', '0 0 0');
-    if (deviceWidth < 500) {
-        // ancho, frente, alto
-        // entity.setAttribute('scale', `3 2 1.5`);
-        entity.setAttribute('scale', `0.8 0.6 0.2`);
-    } else {
-        // entity.setAttribute('scale', `3 3 3`);
-        entity.setAttribute('scale', `0.7 0.8 0.5`);
-    }
     entity.setAttribute('modelo-gltf', content);
     entity.setAttribute('animation-mixer', '');
-    entity.setAttribute('rotation', '90 0 0');
     return entity;
 }
 
@@ -127,38 +142,79 @@ createCamera();
 
 const markerData = {};
 
-marker.addEventListener('markerFound', function () {
-    while (marker.firstChild) {
-        marker.removeChild(marker.firstChild);
+const entity = createEntity(urlRPM);
+const text = createText(name);
+scene.appendChild(text);
+scene.appendChild(entity);
+
+// Darle características a la entidad que contiene el modelo GLB
+if (deviceWidth > 500) {
+    entity.setAttribute('position', '0 -0.8 -5');
+    entity.setAttribute('rotation', '0 180 180')
+    entity.setAttribute('scale', `0.5 0.5 0.5`);
+} else {
+    entity.setAttribute('position', '0 -0.9 -5');
+    entity.setAttribute('rotation', '0 180 180')
+    entity.setAttribute('scale', `1.5 0.5 0.5`);
+}
+
+// Crear cada una de las cajas, añadirle las redes sociales e incorporarlas a la escena
+for (let i = 0; i < amountOfBoxes; i++) {
+    let socialName = social[i].name;
+
+    if (socialName === 'Correo electrónico') {
+        socialName = 'correo';
     }
 
-    const entity = createEntity(urlRPM);
-    marker.appendChild(entity);
-
-    for (let i = 0; i < amountOfBoxes; i++) {
-        let socialName = social[i].name;
-
-        if (socialName === 'Correo electrónico') {
-            socialName = 'correo';
-        }
-
-        let positions;
-        if (deviceWidth < 500) {
-            positions = [...boxPositionsMobile];
-        } else {
-            positions = [...boxPositionsDesktop];
-        }
-
-        const userName = social[i].identifier;
-        const box = createBox(socialName, positions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width, userName);
-
-        markerData[socialName] = box;
-        marker.appendChild(box);
+    let positions;
+    let boxDimensions;
+    if (deviceWidth < 500) {
+        positions = [...boxPositionsMobile];
+        boxDimensions = { ...boxDimensionsMobile };
+    } else {
+        positions = [...boxPositionsDesktop];
+        boxDimensions = { ...boxDimensionsDesktop };
     }
-});
 
-marker.addEventListener('markerLost', function () {
-    while (marker.firstChild) {
-        marker.removeChild(marker.firstChild);
-    }
-});
+    const userName = social[i].identifier;
+    const box = createBox(socialName, positions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width, userName);
+
+    markerData[socialName] = box;
+    scene.appendChild(box);
+}
+
+// marker.addEventListener('markerFound', function () {
+//     while (marker.firstChild) {
+//         marker.removeChild(marker.firstChild);
+//     }
+
+//     const entity = createEntity(urlRPM);
+//     marker.appendChild(entity);
+
+//     for (let i = 0; i < amountOfBoxes; i++) {
+//         let socialName = social[i].name;
+
+//         if (socialName === 'Correo electrónico') {
+//             socialName = 'correo';
+//         }
+
+//         let positions;
+//         if (deviceWidth < 500) {
+//             positions = [...boxPositionsMobile];
+//         } else {
+//             positions = [...boxPositionsDesktop];
+//         }
+
+//         const userName = social[i].identifier;
+//         const box = createBox(socialName, positions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width, userName);
+
+//         markerData[socialName] = box;
+//         marker.appendChild(box);
+//     }
+// });
+
+// marker.addEventListener('markerLost', function () {
+//     while (marker.firstChild) {
+//         marker.removeChild(marker.firstChild);
+//     }
+// });

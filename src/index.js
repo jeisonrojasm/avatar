@@ -20,13 +20,17 @@ let idAvatarLastLS = localStorage.setItem('idAvatarLast', '');
 const progressBar = document.getElementById('progress');
 const progressBarContainer = document.getElementById('progress-bar-container');
 
-function onScanSuccess(content) {
+// function onScanSuccess(content) {
     document.querySelector('#scan-frame-container').classList.add('hidden');
     progressBarContainer.classList.remove('hidden');
     progressBarContainer.classList.add('progress-bar-container-shown');
 
-    const lastIndexOfSlash = content.lastIndexOf('user=');
-    const idUser = content.slice(lastIndexOfSlash + 5);
+    // const lastIndexOfSlash = content.lastIndexOf('user=');
+    const lastIndexOfSlash = window.location.href.lastIndexOf('user=');
+
+    // const idUser = content.slice(lastIndexOfSlash + 5);
+    const idUser = window.location.href.slice(lastIndexOfSlash + 5);
+    
     console.log(idUser);
 
     localStorage.setItem('idAvatarCurrent', `${idUser}`);
@@ -47,7 +51,7 @@ function onScanSuccess(content) {
             }
         }, 2000);
     }
-}
+// }
 
 const configuration = {
     videoConstraints: {
@@ -61,10 +65,7 @@ const configuration = {
     }
 };
 
-html5QrCode.start({ facingMode: "environment" }, configuration, onScanSuccess)
-    .catch((error) => alert(`${error}`));
-
-// html5QrCode.start({ facingMode: "environment" }, { fps: 30 }, onScanSuccess)
+// html5QrCode.start({ facingMode: "environment" }, configuration, onScanSuccess)
 //     .catch((error) => alert(`${error}`));
 
 async function getData(idUser) {
