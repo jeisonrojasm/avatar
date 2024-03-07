@@ -82,8 +82,8 @@ const { social, name } = data; //[]
 // const urlRPM = data.urlRPM + '?quality=low';
 
 // Pruebas con modelo de alta calidad
-const urlRPM = 'https://models.readyplayer.me/6596aa0586bea20eae21c2a4.glb?quality=high&textureQuality=high&textureSizeLimit=1024';
-// const urlRPM = data.urlGLB;
+// const urlRPM = 'https://models.readyplayer.me/6596aa0586bea20eae21c2a4.glb?quality=high&textureQuality=high&textureSizeLimit=1024';
+const urlRPM = data.urlGLB;
 console.log(urlRPM);
 const amountOfBoxes = social.length;
 
@@ -121,21 +121,51 @@ const createEntity = (content) => {
     const entity = document.createElement("a-entity");
     entity.setAttribute('modelo-gltf', content);
     entity.setAttribute('animation-mixer', '');
+    entity.setAttribute('handle-click-change-animation', '');
+    entity.setAttribute('aabb-collider', '');
     return entity;
 }
 
-const createBox = (boxId, boxPosition, boxMaterial, depth, height, width, username) => {
-    const box = document.createElement('a-box');
-    box.setAttribute('id', boxId);
-    box.setAttribute('position', boxPosition);
-    box.setAttribute('color', 'white');
-    box.setAttribute('material', `src:${boxMaterial}; transparent: true;`);
-    box.setAttribute('depth', depth);
-    box.setAttribute('height', height);
-    box.setAttribute('width', width);
-    box.setAttribute('username', username);
-    box.setAttribute('handle-click-social-network', '');
-    return box;
+// const createBox = (boxId, boxPosition, boxMaterial, depth, height, width, username) => {
+//     const box = document.createElement('a-box');
+//     box.setAttribute('id', boxId);
+//     box.setAttribute('position', boxPosition);
+//     box.setAttribute('color', 'white');
+//     box.setAttribute('material', `src:${boxMaterial}; transparent: true;`);
+//     box.setAttribute('depth', depth);
+//     box.setAttribute('height', height);
+//     box.setAttribute('width', width);
+//     box.setAttribute('username', username);
+//     box.setAttribute('handle-click-social-network', '');
+//     return box;
+// }
+
+const createSocialNetworkBox = (socialName, userName, boxPosition, scales) => {
+    console.log('name', socialName);
+    console.log('socialNetworkUsername', userName);
+    const socialNetworkBox = document.createElement("a-entity");
+    socialNetworkBox.setAttribute('gltf-model', `#${socialName.toLowerCase()}`); // social[i].name.toLowerCase()
+    socialNetworkBox.setAttribute('scale', scales);
+    socialNetworkBox.setAttribute('position', boxPosition);
+    socialNetworkBox.setAttribute('username', userName); // social[i].identifier
+    socialNetworkBox.setAttribute('handle-click-social-network', '')
+    socialNetworkBox.setAttribute('id', socialName) // social[i].name
+
+    return socialNetworkBox;
+}
+
+const createAreaToChangeAnimation = () => {
+    const clickeableArea = document.createElement('a-entity');
+    clickeableArea.setAttribute("position", "0 0 -5");
+    if (deviceWidth > 500) {
+        clickeableArea.setAttribute("geometry", "depth: 0.25; width: 0.55; height: 2");
+    } else {
+        clickeableArea.setAttribute("geometry", "depth: 0.25; width: 2; height: 2");
+    }
+    clickeableArea.setAttribute("material", "color: #ff0000; transparent: true; opacity: 0.0");
+    clickeableArea.setAttribute("handle-click-change-animation", "");
+
+    return clickeableArea;
 }
 
 createCamera();
@@ -144,8 +174,11 @@ const markerData = {};
 
 const entity = createEntity(urlRPM);
 const text = createText(name);
+const clickeableArea = createAreaToChangeAnimation();
+
 scene.appendChild(text);
 scene.appendChild(entity);
+scene.appendChild(clickeableArea);
 
 // Darle características a la entidad que contiene el modelo GLB
 if (deviceWidth > 500) {
@@ -167,21 +200,26 @@ for (let i = 0; i < amountOfBoxes; i++) {
     }
 
     let positions;
-    let boxDimensions;
+    let scales;
+    // let boxDimensions;
     if (deviceWidth < 500) {
         positions = [...boxPositionsMobile];
-        boxDimensions = { ...boxDimensionsMobile };
+        scales = '0.76 0.2 0.2';
+        //     boxDimensions = { ...boxDimensionsMobile };
     } else {
         positions = [...boxPositionsDesktop];
-        boxDimensions = { ...boxDimensionsDesktop };
+        scales = '0.4 0.4 0.4';
+        //     boxDimensions = { ...boxDimensionsDesktop };
     }
 
     const userName = social[i].identifier;
-    const box = createBox(socialName, positions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width, userName);
+    // const box = createBox(socialName, positions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width, userName);
+    const box = createSocialNetworkBox(socialName, userName, positions[amountOfBoxes - 1][`position${i + 1}`], scales);
 
-    markerData[socialName] = box;
+    // markerData[socialName] = box;
     scene.appendChild(box);
 }
+
 
 // marker.addEventListener('markerFound', function () {
 //     while (marker.firstChild) {

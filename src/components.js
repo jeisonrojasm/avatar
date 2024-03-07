@@ -7,30 +7,32 @@ AFRAME.registerComponent('handle-click-social-network', {
 
     init: function () {
         this.redirectSocialNetwork = function (e) {
-            const socialNetwork = e.target.id;
+            console.log('Se ejecutó el click de red social');
+            const socialNetwork = e.target.id.toLowerCase();
+            console.log('socialNetwork', socialNetwork);
             const username = e.target.getAttribute('username');
             for (let i = 0; i < socialNetworksArr.length; i++) {
-                if (socialNetwork === socialNetworksArr[i]) {
-                    if (socialNetwork === 'LinkedIn') {
+                if (socialNetwork === socialNetworksArr[i].toLowerCase()) {
+                    if (socialNetwork === 'linkedin') {
                         window.open(`${socialNetworks[i]}/in/${username}`);
-                    } else if (socialNetwork === 'Telegram') {
+                    } else if (socialNetwork === 'telegram') {
                         window.open(`https://t.me/${username}`);
-                    } else if (socialNetwork === 'WhatsApp') {
+                    } else if (socialNetwork === 'whatsapp') {
                         window.open(`https://wa.me/${username}`);
-                    } else if (socialNetwork === 'Messenger') {
+                    } else if (socialNetwork === 'messenger') {
                         window.open(`https://m.me/${username}`);
-                    } else if (socialNetwork === 'Snapchat') {
+                    } else if (socialNetwork === 'snapchat') {
                         window.open(`https://www.snapchat.com/add/${username}`);
-                    } else if (socialNetwork === 'Spotify') {
+                    } else if (socialNetwork === 'spotify') {
                         window.open(`https://open.spotify.com/user/${username}`);
-                    } else if (socialNetwork === 'Correo') {
+                    } else if (socialNetwork === 'correo') {
                         const subject = "Asunto del correo";
                         const body = "Cuerpo del correo";
                         const mailtoUrl = `mailto:${username}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                         window.open(mailtoUrl);
-                    } else if (socialNetwork === 'TikTok') {
+                    } else if (socialNetwork === 'tiktok') {
                         window.open(`https://www.tiktok.com/@${username}`);
-                    } else if (socialNetwork === 'Discord') {
+                    } else if (socialNetwork === 'discord') {
                         window.open(`https://discord.gg/${username}`);
                     } else {
                         window.open(`${socialNetworks[i]}/${username}`);
@@ -70,13 +72,20 @@ AFRAME.registerComponent("modelo-gltf", {
         this.loader = new THREE.GLTFLoader;
     },
     update: function () {
-        var e = this,
-            o = this.el,
-            t = this.data;
+        let self;
+        if (window.thisModelo) {
+            self = window.thisModelo;
+        } else {
+            self = this;
+            window.thisModelo = this;
+        }
+        var e = self,
+            o = self.el,
+            t = self.data;
         var loaderAnimacion = new THREE.GLTFLoader();
-        var loaderModelo = this.loader;
+        var loaderModelo = self.loader;
         const animationToLoad = Math.floor(Math.random() * animations.length);
-        t && (this.remove(),
+        t && (self.remove(),
             loaderAnimacion.load(animations[animationToLoad], function (animacion) {
                 loaderModelo.load(t, function (modelo) {
 
@@ -117,4 +126,25 @@ AFRAME.registerComponent("modelo-gltf", {
         this.model && this.el.removeObject3D("mesh")
     }
 
+});
+
+AFRAME.registerComponent("handle-click-change-animation", {
+    init: function () {
+        this.changeAnimation = function (e) {
+            console.log('Se ejecutó el click', e);
+            console.log('AFRAME', AFRAME);
+            console.log('AFRAME.components', AFRAME.components);
+            // Accede al componente "modelo-gltf" y ejecuta su lógica
+            var modeloComponent = AFRAME.components['modelo-gltf'];
+            if (modeloComponent) {
+                modeloComponent.Component.prototype.update.call(this.el);
+            }
+        }
+
+        this.el.addEventListener('click', this.changeAnimation);
+    },
+
+    remove: function () {
+        this.el.removeEventListener('click', this.changeAnimation);
+    }
 });

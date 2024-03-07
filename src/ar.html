@@ -30,11 +30,17 @@
         renderer="logarithmicDepthBuffer: true;"
         inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
         <!-- <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking="image"></a-marker> -->
-        <a-entity light="distance: 5; intensity: 3; type: point" position="-0.05 0.5 -3.5"></a-entity>
-        <a-entity light="type: point; intensity: 3; distance: 5" position="4.5 1 -6"></a-entity>
-        <a-entity light="type: point; distance: 5" position="0.4 -1 -5"></a-entity>
-        <a-entity light="type: point; intensity: 3; distance: 5" position="-4.5 1 -6"></a-entity>
-        <a-entity light="type: point; intensity: 2; distance: 1" position="-0.4 -1 -5"></a-entity>
+        <a-assets>
+            <a-asset-item id="tiktok" src="../assets/images/Facebook.glb"></a-asset-item>
+            <a-asset-item id="instagram" src="../assets/images/Facebook.glb"></a-asset-item>
+            <a-asset-item id="facebook" src="../assets/images/Facebook.glb"></a-asset-item>
+            <a-asset-item id="correo" src="../assets/images/Email.glb"></a-asset-item>
+            <a-asset-item id="linkedin" src="../assets/images/LinkedIn.glb"></a-asset-item>
+            <a-asset-item id="web" src="../assets/images/Web.glb"></a-asset-item>
+            <a-asset-item id="whatsapp" src="../assets/images/Whatsapp.glb"></a-asset-item>
+        </a-assets>
+
+        <!-- <a-entity gltf-model="#facebook"></a-entity> -->
     </a-scene>
 
     <script src="./ar.js" type="module"></script>
