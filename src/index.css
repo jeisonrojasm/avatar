@@ -96,29 +96,59 @@ body {
     background: linear-gradient(30deg, #01c38d 0%, #132d46 82%);
 }
 
-.a-canvas-small {
-    height: 100vw !important;
-    width: 100vw !important;
+.a-canvas-avatar {
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     position: fixed !important;
 }
 
-.a-canvas-medium {
-    height: 50vw !important;
-    width: 50vw !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    position: fixed !important;
+.a-canvas-200 {
+    width: 200vw;
+    height: 200vw;
 }
 
-.a-canvas-large {
-    height: 35vw !important;
-    width: 35vw !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    position: fixed !important;
+.a-canvas-180 {
+    width: 180vw;
+    height: 180vw;
+}
+
+.a-canvas-150 {
+    width: 150vw;
+    height: 150vw;
+}
+
+.a-canvas-120 {
+    width: 120vw;
+    height: 120vw;
+}
+
+.a-canvas-90 {
+    width: 90vw;
+    height: 90vw;
+}
+
+.a-canvas-70 {
+    width: 70vw;
+    height: 70vw;
+}
+
+.a-canvas-60 {
+    width: 60vw;
+    height: 60vw;
+}
+
+.a-canvas-50 {
+    width: 50vw;
+    height: 50vw;
+}
+
+.a-canvas-40 {
+    width: 40vw;
+    height: 40vw;
+}
+
+.a-canvas-35 {
+    width: 35vw;
+    height: 35vw;
 }

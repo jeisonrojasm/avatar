@@ -17,40 +17,55 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => {
 
         var canvasElement = document.querySelector('a-scene canvas');
-        
-        canvasElement.classList.remove('a-canvas')
 
-        if (aspectRatio < 1) {
-            canvasElement.classList.add('a-canvas-small')
+        canvasElement.classList.remove('a-canvas')
+        canvasElement.classList.add('a-canvas-avatar')
+
+        if (aspectRatio < 0.2) {
+            canvasElement.classList.add('a-canvas-200')
+        } else if (aspectRatio < 0.4) {
+            canvasElement.classList.add('a-canvas-180')
+        } else if (aspectRatio < 0.6) {
+            canvasElement.classList.add('a-canvas-150')
+        } else if (aspectRatio < 0.8) {
+            canvasElement.classList.add('a-canvas-220')
+        } else if (aspectRatio < 1) {
+            canvasElement.classList.add('a-canvas-90')
+        } else if (aspectRatio < 1.2) {
+            canvasElement.classList.add('a-canvas-70')
+        } else if (aspectRatio < 1.6) {
+            canvasElement.classList.add('a-canvas-60')
         } else if (aspectRatio < 2) {
-            canvasElement.classList.add('a-canvas-medium')
-        } else if (aspectRatio >= 2) {
-            canvasElement.classList.add('a-canvas-large')
+            canvasElement.classList.add('a-canvas-50')
+        } else if (aspectRatio < 2.4) {
+            canvasElement.classList.add('a-canvas-40')
+        } else if (aspectRatio >= 3) {
+            canvasElement.classList.add('a-canvas-35')
         }
 
-    }, 5000);
+    }, 2000);
 });
 
 const deviceWidth = window.innerWidth;
 
 const boxPositionsDesktop = [
     {
-        position1: '0.0 -1.6 -5.0'
+        position1: '0.0 -1.7 -5.0'
     },
     {
-        position1: '-0.5 -1.6 -5.0',
-        position2: '0.5 -1.6 -5.0'
+        position1: '-0.3 -1.7 -5.0',
+        position2: '0.3 -1.7 -5.0'
     },
     {
-        position1: '-1 -1.6 -5.0',
-        position2: '0.0 -1.6 -5.0',
-        position3: '1 -1.6 -5.0'
+        position1: '-0.6 -1.7 -5.0',
+        position2: '0.0 -1.7 -5.0',
+        position3: '0.6 -1.7 -5.0'
     },
     {
-        position1: '-1.5 -1.6 -5.0',
-        position2: '-0.5 -1.6 -5.0',
-        position3: '0.5 -1.6 -5.0',
-        position4: '1.5 -1.6 -5.0'
+        position1: '-0.9 -1.7 -5.0',
+        position2: '-0.3 -1.7 -5.0',
+        position3: '0.3 -1.7 -5.0',
+        position4: '0.9 -1.7 -5.0'
     }
 ];
 
@@ -134,14 +149,9 @@ const createText = (text) => {
     aText.setAttribute('value', `${text}`);
     aText.setAttribute('color', 'white');
     aText.setAttribute('align', 'center');
+    aText.setAttribute('position', '0 1.9 -5');
+    aText.setAttribute('scale', '0.6 0.6 0.6');
 
-    if (deviceWidth > 500) {
-        aText.setAttribute('position', '0 1.5 -5');
-        aText.setAttribute('scale', '0.6 0.6 0.6');
-    } else {
-        aText.setAttribute('position', '0 1.3 -5');
-        aText.setAttribute('scale', '2 0.8 1');
-    }
     return aText;
 }
 
@@ -185,11 +195,7 @@ const createSocialNetworkBox = (socialName, userName, boxPosition, scales) => {
 const createAreaToChangeAnimation = () => {
     const clickeableArea = document.createElement('a-entity');
     clickeableArea.setAttribute("position", "0 0 -5");
-    if (deviceWidth > 500) {
-        clickeableArea.setAttribute("geometry", "depth: 0.25; width: 0.55; height: 2");
-    } else {
-        clickeableArea.setAttribute("geometry", "depth: 0.25; width: 2; height: 2");
-    }
+    clickeableArea.setAttribute("geometry", "depth: 0.25; width: 0.55; height: 2");
     clickeableArea.setAttribute("material", "color: #ff0000; transparent: true; opacity: 0.0");
     clickeableArea.setAttribute("handle-click-change-animation", "");
 
@@ -209,15 +215,9 @@ scene.appendChild(entity);
 scene.appendChild(clickeableArea);
 
 // Darle características a la entidad que contiene el modelo GLB
-if (deviceWidth > 500) {
-    entity.setAttribute('position', '0 -0.8 -5');
-    entity.setAttribute('rotation', '0 180 180')
-    entity.setAttribute('scale', `0.5 0.5 0.5`);
-} else {
-    entity.setAttribute('position', '0 -0.9 -5');
-    entity.setAttribute('rotation', '0 180 180')
-    entity.setAttribute('scale', `1.5 0.5 0.5`);
-}
+entity.setAttribute('position', '0 -1.0 -5');
+entity.setAttribute('rotation', '0 180 180');
+entity.setAttribute('scale', `0.7 0.7 0.7`);
 
 // Crear cada una de las cajas, añadirle las redes sociales e incorporarlas a la escena
 for (let i = 0; i < amountOfBoxes; i++) {
@@ -229,16 +229,8 @@ for (let i = 0; i < amountOfBoxes; i++) {
 
     let positions;
     let scales;
-    // let boxDimensions;
-    if (deviceWidth < 500) {
-        positions = [...boxPositionsMobile];
-        scales = '0.76 0.2 0.2';
-        //     boxDimensions = { ...boxDimensionsMobile };
-    } else {
-        positions = [...boxPositionsDesktop];
-        scales = '0.4 0.4 0.4';
-        //     boxDimensions = { ...boxDimensionsDesktop };
-    }
+    positions = [...boxPositionsDesktop];
+    scales = '0.4 0.4 0.4';
 
     const userName = social[i].identifier;
     // const box = createBox(socialName, positions[amountOfBoxes - 1][`position${i + 1}`], boxImages[socialName], boxDimensions.depth, boxDimensions.height, boxDimensions.width, userName);
