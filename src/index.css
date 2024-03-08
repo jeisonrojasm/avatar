@@ -95,3 +95,30 @@ body {
     height: 100%;
     background: linear-gradient(30deg, #01c38d 0%, #132d46 82%);
 }
+
+.a-canvas-small {
+    height: 100vw !important;
+    width: 100vw !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    position: fixed !important;
+}
+
+.a-canvas-medium {
+    height: 50vw !important;
+    width: 50vw !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    position: fixed !important;
+}
+
+.a-canvas-large {
+    height: 35vw !important;
+    width: 35vw !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    position: fixed !important;
+}

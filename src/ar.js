@@ -3,6 +3,34 @@ const data = JSON.parse(localStorage.getItem('data'));
 const marker = document.querySelector('a-marker');
 const scene = document.querySelector('a-scene');
 
+// Espera a que el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtener el ancho y la altura de la ventana
+    let windowWidth = window.innerWidth;
+    let windowHeight = window.innerHeight;
+
+    // Calcular la relación de aspecto
+    let aspectRatio = windowWidth / windowHeight;
+
+    // Mostrar la relación de aspecto en la consola
+    console.log('La relación de aspecto de la ventana es: ' + aspectRatio);
+    setTimeout(() => {
+
+        var canvasElement = document.querySelector('a-scene canvas');
+        
+        canvasElement.classList.remove('a-canvas')
+
+        if (aspectRatio < 1) {
+            canvasElement.classList.add('a-canvas-small')
+        } else if (aspectRatio < 2) {
+            canvasElement.classList.add('a-canvas-medium')
+        } else if (aspectRatio >= 2) {
+            canvasElement.classList.add('a-canvas-large')
+        }
+
+    }, 5000);
+});
+
 const deviceWidth = window.innerWidth;
 
 const boxPositionsDesktop = [

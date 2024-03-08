@@ -18,16 +18,13 @@
     <script src="https://unpkg.com/browse/three@0.152.2/examples/jsm/loaders/GLTFLoader.js"></script>
 
     <script src="./components.js" type="module"></script>
+    <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
-    <a-scene 
-        id="scene" 
-        cursor="rayOrigin: mouse"
-        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" 
-        vr-mode-ui="enabled: false;"
-        loading-screen="enabled: false;"
-        renderer="logarithmicDepthBuffer: true;"
+    <a-scene id="scene" cursor="rayOrigin: mouse"
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false;"
+        loading-screen="enabled: false;" renderer="logarithmicDepthBuffer: true;"
         inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
         <!-- <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking="image"></a-marker> -->
         <a-assets>
