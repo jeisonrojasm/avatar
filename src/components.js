@@ -49,12 +49,79 @@ AFRAME.registerComponent('handle-click-social-network', {
     }
 });
 
+AFRAME.registerComponent('gesture-detector', {
+    schema: {
+        threshold: { default: 2 } // Ajusta según sea necesario
+    },
+
+    init: function () {
+        this.startPosition = { x: 0, y: 0 };
+        this.el.addEventListener('touchstart', this.onTouchStart.bind(this));
+        this.el.addEventListener('touchmove', this.onTouchMove.bind(this));
+    },
+
+    onTouchStart: function (event) {
+        this.startPosition = this.getTouchEventPosition(event);
+    },
+
+    onTouchMove: function (event) {
+        var currentPosition = this.getTouchEventPosition(event);
+        var deltaX = currentPosition.x - this.startPosition.x;
+        var deltaY = currentPosition.y - this.startPosition.y;
+
+        if (Math.abs(deltaX) > this.data.threshold || Math.abs(deltaY) > this.data.threshold) {
+            // Desplazamiento táctil detectado, emular el comportamiento WASD
+            var camera = document.querySelector('[camera]');
+            var entities = document.querySelectorAll('a-entity');
+            console.log('entity', entities);
+            var entityRotation = entities[0].getAttribute('rotation');
+            console.log('entityRotation', entityRotation);
+
+            // Ajusta la velocidad de desplazamiento según tus necesidades
+            var positionSpeed = 0.01;
+            var rotationSpeed = 1;
+
+            // Calcula la nueva posición de la cámara
+            var newPosition = {
+                x: camera.object3D.position.x,
+                y: camera.object3D.position.y,
+                z: camera.object3D.position.z - deltaY * positionSpeed
+            };
+
+            // Aplica la nueva posición a la cámara
+            console.log('newPosition', newPosition);
+            
+            if (newPosition.z > -0.10) camera.setAttribute('position', newPosition);
+
+            entities.forEach(function (entity) {
+                var entityRotation = entity.getAttribute('rotation');
+
+                var newRotation = {
+                    x: entityRotation.x,
+                    y: entityRotation.y + deltaX * rotationSpeed,
+                    z: entityRotation.z
+                }
+
+                entity.setAttribute('rotation', newRotation);
+            })
+
+            // Actualiza la posición inicial para el próximo movimiento
+            this.startPosition = currentPosition;
+        }
+    },
+
+    getTouchEventPosition: function (event) {
+        var touch = event.touches[0];
+        return { x: touch.clientX, y: touch.clientY };
+    }
+});
+
 const animations = [
-    '../assets/1-anim-flareDancing.glb',
+    // '../assets/1-anim-flareDancing.glb',
     '../assets/2-anim-punchingBag.glb',
     '../assets/3-anim-shootingArrow.glb',
     '../assets/4-anim-shootingGun.glb',
-    '../assets/5-anim-waveDancing.glb',
+    // '../assets/5-anim-waveDancing.glb',
     '../assets/6-anim-guitarPlaying.glb',
     '../assets/7-anim-jump.glb',
     '../assets/8-anim-salute.glb',
@@ -87,6 +154,7 @@ AFRAME.registerComponent("modelo-gltf", {
         const animationToLoad = Math.floor(Math.random() * animations.length);
         t && (self.remove(),
             loaderAnimacion.load(animations[animationToLoad], function (animacion) {
+                console.log('animations[animationToLoad]', animations[animationToLoad]);
                 loaderModelo.load(t, function (modelo) {
 
                     modelo.scene.scale.set(2.0, 2.0, 2.0);

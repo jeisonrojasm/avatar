@@ -210,6 +210,7 @@ const entity = createEntity(urlRPM);
 const text = createText(name);
 const clickeableArea = createAreaToChangeAnimation();
 
+scene.setAttribute('gesture-detector', '');
 scene.appendChild(text);
 scene.appendChild(entity);
 scene.appendChild(clickeableArea);

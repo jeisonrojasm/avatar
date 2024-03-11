@@ -22,10 +22,15 @@
 </head>
 
 <body>
-    <a-scene id="scene" cursor="rayOrigin: mouse"
-        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false;"
-        loading-screen="enabled: false;" renderer="logarithmicDepthBuffer: true;"
-        inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
+    <a-scene
+        id="scene"
+        cursor="rayOrigin: mouse"
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+        vr-mode-ui="enabled: false;"
+        loading-screen="enabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
+        inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
+        keyboard-shortcuts>
         <!-- <a-marker type="pattern" preset="custom" url="../assets/Marker.patt" ar-tracking="image"></a-marker> -->
         <a-assets>
             <a-asset-item id="tiktok" src="../assets/images/Facebook.glb"></a-asset-item>
