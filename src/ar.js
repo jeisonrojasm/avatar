@@ -211,6 +211,7 @@ const text = createText(name);
 const clickeableArea = createAreaToChangeAnimation();
 
 scene.setAttribute('gesture-detector', '');
+scene.setAttribute('gesture-detector-mouse', '');
 scene.appendChild(text);
 scene.appendChild(entity);
 scene.appendChild(clickeableArea);

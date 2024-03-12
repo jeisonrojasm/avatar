@@ -90,7 +90,7 @@ AFRAME.registerComponent('gesture-detector', {
 
             // Aplica la nueva posición a la cámara
             console.log('newPosition', newPosition);
-            
+
             if (newPosition.z > -0.10) camera.setAttribute('position', newPosition);
 
             entities.forEach(function (entity) {
@@ -116,17 +116,91 @@ AFRAME.registerComponent('gesture-detector', {
     }
 });
 
+AFRAME.registerComponent('gesture-detector-mouse', {
+    schema: {
+        threshold: { default: 2 } // Ajusta según sea necesario
+    },
+
+    init: function () {
+        this.startPosition = { x: 0, y: 0 };
+        this.mouseDown = false;
+
+        this.el.addEventListener('mousedown', this.onTouchStart.bind(this));
+        this.el.addEventListener('mousemove', this.onTouchMove.bind(this));
+        this.el.addEventListener('mouseup', this.onTouchEnd.bind(this));
+    },
+
+    onTouchStart: function (event) {
+        this.mouseDown = true;
+        this.startPosition = this.getMouseEventPosition(event);
+    },
+
+    onTouchMove: function (event) {
+        if (!this.mouseDown) return;
+
+        var currentPosition = this.getMouseEventPosition(event);
+        var deltaX = currentPosition.x - this.startPosition.x;
+        var deltaY = currentPosition.y - this.startPosition.y;
+
+        if (Math.abs(deltaX) > this.data.threshold || Math.abs(deltaY) > this.data.threshold) {
+            // Desplazamiento con el mouse detectado, emular el comportamiento WASD
+            var camera = document.querySelector('[camera]');
+            var entities = document.querySelectorAll('a-entity');
+            var entityRotation = entities[0].getAttribute('rotation');
+
+            var positionSpeed = 0.01;
+            var rotationSpeed = 1;
+
+            var newPosition = {
+                x: camera.object3D.position.x,
+                y: camera.object3D.position.y,
+                z: camera.object3D.position.z - deltaY * positionSpeed
+            };
+
+            // Aplica la nueva posición a la cámara
+            if (newPosition.z > -0.10) camera.setAttribute('position', newPosition);
+
+            entities.forEach(function (entity) {
+                var entityRotation = entity.getAttribute('rotation');
+
+                var newRotation = {
+                    x: entityRotation.x,
+                    y: entityRotation.y + deltaX * rotationSpeed,
+                    z: entityRotation.z
+                }
+
+                entity.setAttribute('rotation', newRotation);
+            })
+
+            // Actualiza la posición inicial para el próximo movimiento
+            this.startPosition = currentPosition;
+        }
+    },
+
+    onTouchEnd: function () {
+        this.mouseDown = false;
+        // Realiza acciones adicionales cuando se levanta el botón del mouse (opcional)
+    },
+
+    getMouseEventPosition: function (event) {
+        return { x: event.clientX, y: event.clientY };
+    }
+});
+
+
+
 const animations = [
     // '../assets/1-anim-flareDancing.glb',
-    '../assets/2-anim-punchingBag.glb',
-    '../assets/3-anim-shootingArrow.glb',
-    '../assets/4-anim-shootingGun.glb',
+    // '../assets/2-anim-punchingBag.glb',
+    // '../assets/3-anim-shootingArrow.glb',
+    // '../assets/4-anim-shootingGun.glb',
     // '../assets/5-anim-waveDancing.glb',
-    '../assets/6-anim-guitarPlaying.glb',
-    '../assets/7-anim-jump.glb',
-    '../assets/8-anim-salute.glb',
-    '../assets/9-anim-sittingThumbsUp.glb',
-    '../assets/10-anim-sitting.glb'
+    // '../assets/6-anim-guitarPlaying.glb',
+    // '../assets/7-anim-jump.glb',
+    // '../assets/8-anim-salute.glb',
+    // '../assets/9-anim-sittingThumbsUp.glb',
+    '../assets/10-anim-sitting.glb',
+    '../assets/11-anim-defeated.glb'
 ];
 
 AFRAME.registerComponent("modelo-gltf", {
