@@ -135,7 +135,8 @@ const createCamera = () => {
     const camera = document.createElement('a-camera');
     camera.setAttribute('camera', '');
     camera.setAttribute('raycaster', '');
-    camera.setAttribute('position', '0 0 0');
+    camera.setAttribute('position', '0 1 0');
+    camera.setAttribute('rotation', '-10 0 0');
     camera.setAttribute('fov', '45');
     camera.setAttribute('look-controls-enabled', 'false');
     camera.setAttribute('user-controls', '');
@@ -161,6 +162,7 @@ const createEntity = (content) => {
     entity.setAttribute('animation-mixer', '');
     entity.setAttribute('handle-click-change-animation', '');
     entity.setAttribute('aabb-collider', '');
+    entity.setAttribute('id', 'avatar');
     return entity;
 }
 
@@ -218,8 +220,8 @@ scene.appendChild(clickeableArea);
 
 // Darle características a la entidad que contiene el modelo GLB
 entity.setAttribute('position', '0 -1.0 -5');
-entity.setAttribute('rotation', '0 180 180');
-entity.setAttribute('scale', `0.7 0.7 0.7`);
+entity.setAttribute('rotation', '0 0 0');
+entity.setAttribute('scale', `1.35 1.35 1.35`);
 
 // Crear cada una de las cajas, añadirle las redes sociales e incorporarlas a la escena
 for (let i = 0; i < amountOfBoxes; i++) {

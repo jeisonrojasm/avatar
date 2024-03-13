@@ -199,8 +199,14 @@ const animations = [
     // '../assets/7-anim-jump.glb',
     // '../assets/8-anim-salute.glb',
     // '../assets/9-anim-sittingThumbsUp.glb',
-    '../assets/10-anim-sitting.glb',
-    '../assets/11-anim-defeated.glb'
+    // '../assets/10-anim-sitting.glb',
+    // '../assets/11-anim-defeated.glb'
+    '../assets/1-anim-breathingIdle.glb',
+    '../assets/2-anim-idle.glb',
+    '../assets/3-anim-looking.glb',
+    '../assets/4-anim-talking.glb',
+    '../assets/5-anim-waving.glb',
+    '../assets/7-anim-lookingDown.glb'
 ];
 
 AFRAME.registerComponent("modelo-gltf", {
@@ -232,7 +238,7 @@ AFRAME.registerComponent("modelo-gltf", {
                 loaderModelo.load(t, function (modelo) {
 
                     modelo.scene.scale.set(2.0, 2.0, 2.0);
-                    modelo.scene.rotation.x += -1.5
+                    // modelo.scene.rotation.x += -1.5
 
                     for (let i = 0; i < animacion.animations[0].tracks.length; i++) {
                         const str = animacion.animations[0].tracks[i].name;

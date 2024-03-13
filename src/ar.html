@@ -42,6 +42,19 @@
             <a-asset-item id="whatsapp" src="../assets/images/Whatsapp.glb"></a-asset-item>
         </a-assets>
 
+        <!-- Luz direccional -->
+        <a-light type="directional" position="0 5 -5" target="#avatar" intensity="0.5" color="#398efe" angle="60"></a-light>
+        <a-light type="directional" position="0 -0.729 -4.228" target="#avatar" intensity="0.5" color="#398efe" angle="60"></a-light>
+
+        <!-- Luz puntual -->
+        <a-light type="point" position="0 3 -5" intensity="1" distance="10" decay="2" color="#fff700"></a-light>
+
+        <!-- Luz ambiental -->
+        <a-light type="ambient" color="#b79a80" intensity="1.6"></a-light>
+
+        <!-- Luz de área -->
+        <a-light type="area" position="0 5 -10" intensity="0.8" width="5" height="5" color="#00ff00"></a-light>
+
         <!-- <a-entity gltf-model="#facebook"></a-entity> -->
     </a-scene>
 
